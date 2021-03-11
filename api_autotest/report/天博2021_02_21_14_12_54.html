@@ -1,0 +1,1397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.3"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Adil
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:Error   // pt hiddenRow, ft none
+4:All     //pt none, ft none
+下面设置 按钮展开逻辑  --Yang Yao Jun
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2 || level ==3 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+    //console.log(detail_class.length)
+    if (level == 3) {
+        for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="收起"
+        }
+    }
+    else{
+            for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="详细"
+        }
+    }
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&');
+    s = s.replace(/</g,'<');
+    s = s.replace(/>/g,'>');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> kemp</p>
+<p class='attribute'><strong>开始时间 : </strong> 2021-02-21 14:12:54</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:02:53.841829</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 31，通过 31，通过率= 100.00%</p>
+
+<p class='description'>用例执行情况</p>
+</div>
+
+
+
+    <p id='show_detail_line'>
+    <a class="btn btn-primary" href='javascript:showCase(0)'>通过率 [100.00% ]</a>
+    <a class="btn btn-success" href='javascript:showCase(2)'>通过[ 31 ]</a>
+    <a class="btn btn-warning" href='javascript:showCase(3)'>错误[ 0 ]</a>
+    <a class="btn btn-danger" href='javascript:showCase(1)'>失败[ 0 ]</a>
+    <a class="btn btn-info" href='javascript:showCase(4)'>所有[ 31 ]</a>
+    </p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>错误</td>
+    <td>失败</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_bannerNotice.BannerNotice</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',1)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_bannerNotice</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt1_1: [2021-02-21 14:12:54,631] - INFO: --------test is begin--------
+[2021-02-21 14:12:54,632] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:12:54,633] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:12:54,633] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:12:54,763] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45acbeac1d13e087d50d8dbd3a0740e9f0f', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:12:54,764] - INFO: 请求url:http://pre-h5.theyyone.com/api/v2/bannerNotice
+[2021-02-21 14:12:54,764] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45acbeac1d13e087d50d8dbd3a0740e9f0f'}
+[2021-02-21 14:12:54,911] - INFO: 请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '查询成功', 'data': {'bannerNotice': {'banner': [{'title_img': 'https://static.bpa7g4.com/imgs/banner/dfa5410d65c3c8a92a0a7a4e9e0315d9b69b9fe4.jpg', 'link_url': '/app/activeLandPage/7', 'subtitle': '每月&amp;周免费红包强势来袭', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/d13bc44c83ff67f753514b202a679be6f84d9587.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/01a57bb29bdaa42c9b5c467306aee2cb42e74ae5.png', 'link_url': '/app/springFestival/147', 'subtitle': '金牛赐福闹新春', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/a0c7866efbffce94317fff4ae8c18246cb127139.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/ef1ad42f5eee588be81dc03ad2764ff88c6c24d8.jpg', 'link_url': '/app/activeLandPage/154', 'subtitle': '天博捕鱼来袭', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/0101a10508fc824c57c54defd19c394e6870108a.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/0f04a311650920bd0cbac02073e183c33bca242f.jpg', 'link_url': '/app/activeLandPage/153', 'subtitle': '足球赢上再赢，让您赢嗨翻天', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/5ba10025965eebdcf8890228b76750be4a935138.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/agent/3f9c65b24cc709f9a9f91ee680cc3542.jpg', 'link_url': '/app/activeLandPage/28', 'subtitle': '天博霸王餐 负利100%返还', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/agent/93ed495ff2607eb9007b5e29982d374e.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/eea1b06bbf0df68faabb32d61ad6af7ac2e02a08.jpg', 'link_url': '/app/activeLandPage/151', 'subtitle': '2.0畅所欲言，反馈有礼', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/e5d3c7814823f8e6d5e79b48c30cf4d00d96a809.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/990bd9e2154d5c5b440c392d70657f6672aa6be2.jpg', 'link_url': '/app/sportsQuadruple/139', 'subtitle': '天博巅峰对决 四重惊喜嗨翻天', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/ae0d0335dd4c872712fb41d05d87b9bc01355bd7.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/8c7c70b424ebbf8cb0ab21242edd7b1407f000fb.jpg', 'link_url': 'https://www.tb19.app', 'subtitle': 'app展示图', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/7bff7063e0769b71c99592847371b06b08a28fea.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/93d955988350b6ae1934380bedbec922b81bef84.jpg', 'link_url': '/app/sponsor/0', 'subtitle': '克罗地亚赞助', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/c495ae0a2bdf12719a57617e9dc3fca68c9599d8.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/c542c12c5efd5f7d4b6b173212bb393f2a3afc41.jpg', 'link_url': '/app/sponsor/1', 'subtitle': '苏克赞助', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/d2dbb8c1fafdba13c8289d59c674ee69d5d04d99.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}, {'title_img': 'https://static.bpa7g4.com/imgs/banner/669215813757d9a6b393ebed2b128002fbf0d0eb.jpg', 'link_url': '/app/mine/agent', 'subtitle': '合营伙伴', 'title': '', 'night_img': 'https://static.bpa7g4.com/imgs/banner/c5e1ff7027252a540435ac4e3968fe88fe6e241c.jpg', 'api_id': '', 'api_name': '', 'api_title': ''}], 'notice': [{'title': '【VIP免费红包】', 'content': '免费红包全新升级，点击APP首页公告栏下方【VIP】按钮进入VIP详情页，免费月红包、周红包点击就送！', 'url': '', 'created_at': '2021-02-03 22:18:54', 'updated_at': '2021-02-20 21:37:02'}, {'title': '【天博捕鱼】活动通知', 'content': '【天博捕鱼】超值活动即将来袭，活动期间在天博捕鱼有效投注额达到对应等级即可参与瓜分对应奖池，当日满足投注要求的会员次日即可参与瓜分最高88888元奖励。累计有效投注可算入排行榜，登顶榜首一人独享8888元。详情请前往【 优惠活动】查看专题活动。温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-20 21:36:49', 'updated_at': '2021-02-20 21:36:53'}, {'title': '【足球赢上赢】上线通知', 'content': 'OB体育答谢福利火热来袭，活动期间内指定在OB体育场馆投注单关足球早盘或滚球的赛事，投注的赔率在港赔0.50 - 0.97 或 欧赔1.50 - 1.97获胜，水位即加赠一点，当日投注次日派彩。详情请前往【 优惠活动】查看专题活动。温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-19 23:55:58', 'updated_at': '2021-02-20 00:00:14'}, {'title': '天博最新网址', 'content': '亲爱的天博用户，请认准天博体育官方最新网址【tianbo.com、tbvip.com、tbtyvip.com、www.tbvip28.com】，首页下方扫描二维码下载APP，体验指尖博弈乐趣！', 'url': '', 'created_at': '2020-01-26 23:40:08', 'updated_at': '2021-02-19 12:45:47'}, {'title': '【彩票复市】', 'content': '天博小青龙提醒您：部分福彩、体彩、快乐彩等彩种已结束官方春节休市，2月19日将陆续恢复开奖。我平台各彩票场馆均可正常进行上述彩种娱乐，温馨常在初心如故！', 'url': '', 'created_at': '2021-02-18 22:30:14', 'updated_at': '2021-02-19 00:01:51'}, {'title': '【天博乐在棋中】活动通知', 'content': '【天博乐在“棋”中】活动火热开启中，活动期间，投注天博棋牌总有效投注额达到对应档位，即可获得最高188彩金奖励，若产生负盈利≥500元，还可获得额外亏损救援金，最高188元。当天领取活动奖励后即计算为签到1次，根据累计签到次数，最高可领取38元签到彩金。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-13 21:07:37', 'updated_at': '2021-02-17 13:40:30'}, {'title': '【反馈有礼】上线通知', 'content': '天博综合APP、体育APP、H5目前均已上线2.0全新版本，凡是在活动期间提供优化意见的会员，一经采纳即可获得18-188元的彩金奖励。意见嘉奖参与方式：点击【我的】-【意见反馈】-【提交反馈】', 'url': '', 'created_at': '2021-02-17 02:42:53', 'updated_at': '2021-02-17 02:42:57'}, {'title': '【OB体育场馆】上线通知', 'content': '【天博体育】懂您所需！即日起（2月10日）将为您提供极致体验，全新【OB体育场馆】震撼来袭！投注、视频、尽在掌握，一览无余！综合APP端、 WEB端、H5端优先上线。天博致力于为您提供最佳优质体验！', 'url': '', 'created_at': '2021-02-10 16:03:09', 'updated_at': '2021-02-10 16:03:18'}, {'title': '移动端2.0上线', 'content': '新主题【香槟金】焕新启用。懂您所想，知您所需。立即更新开启天博2.0！', 'url': '', 'created_at': '2021-02-09 18:18:23', 'updated_at': '2021-02-10 16:02:14'}, {'title': '【金牛贺岁】活动开启', 'content': '【金牛贺岁开福袋】活动已开启！活动期间会员在eBET真人场馆进行投注，每日12:00:00-23:59:59 ，每1个小时均有100个福袋名额待开启，玩家通过参与投注来获得抽奖机会，数量有限，先开先得。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-06 23:16:53', 'updated_at': '2021-02-10 12:00:51'}, {'title': '【金牛赐福】活动开启', 'content': '【金牛赐福闹新春，四重豪礼齐贺岁】活动开启中，第一重金牛纳福，场馆贺新礼：每日点亮祝福词条，即可领取对应彩金。第二重牛气冲天，集字享彩：集齐所有字符即可参与瓜分888888彩金。第三重新春存送惠，拜年红包雨：投注嘉奖单日最高可领12888元。两日共48波红包雨全天不间断。第四重元宵庆团圆，福气溢满天：吃元宵得彩金，最高可得8888元。元宵红包雨全天不间断。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-07 23:52:55', 'updated_at': '2021-02-08 14:31:27'}, {'title': '【BG牛转乾坤】活动开启', 'content': '2021/02/07~2021/02/16玩BG真人畅享百万红包。每局有效投注，无论输赢，皆有机会获得现金红包。并累积六局，皆有机会获得额外的惊喜红包。详情请前往【 BG真人视讯】查看专题活动。温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-07 00:03:02', 'updated_at': '2021-02-07 00:03:08'}, {'title': '温馨提示', 'content': '为了保障您的财产利益以及个人信息安全，请勿相信任何非官网获取存款方式。存款请于天博官网获取支付订单，及时与在线客服确认收款方是否具备代充资质，谨防资金流失！', 'url': '', 'created_at': '2021-02-04 18:08:44', 'updated_at': '2021-02-04 18:10:27'}, {'title': '【笔笔存送】', 'content': '【USDT】笔笔存送正在进行中，新老会员均可享受。日日可享存送优惠，单日最高赠送888元彩金。详情请前往【优惠活动查看】！', 'url': '', 'created_at': '2021-02-04 15:56:55', 'updated_at': '2021-02-04 15:57:05'}, {'title': '【篮球新玩法 燃爆IM】', 'content': '好消息！IM体育场馆新增NBA【ES-网络篮球2K20赛事】新玩法！届时您可前往进行查看和投注，体验更多乐趣尽在天博体育，祝您游戏愉快！', 'url': '', 'created_at': '2021-02-02 17:55:27', 'updated_at': '2021-02-02 17:55:32'}, {'title': '【事件嘉奖】活动开启', 'content': '【激情绿茵，事件嘉奖】活动焕新开启中，活动期间会员投注指定体育赛事，如赛事出现以下事件，会员可根据当场赛事累计有效投注额获得对应等级彩金奖励，不同事件彩金可叠加。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-01-25 06:44:43', 'updated_at': '2021-02-01 13:05:02'}, {'title': '【活动延期】', 'content': '为回馈广大会员的支持与厚爱【天博VIP 回归专享】【回归三重奏 彩金享不停】【天博VIP专属 乐享双重福利】活动现以延期至2021年2月28日23:59:59。前往了解！', 'url': '', 'created_at': '2020-12-28 17:03:11', 'updated_at': '2021-01-31 14:31:24'}, {'title': '【体育巅峰对决】活动开启', 'content': '【体育巅峰对决，四重好礼嗨翻天】活动已开启，一重焦点赛事巡回，根据累计有效投注额发放巡游彩金奖励，单站点最高可获1888元。二重返水加持，根据VIP等级获得返水加持，最高可获15888元。三重盈利嘉奖，累计投注额满足对应要求将获得额外加奖，最高嘉奖1888元彩金。四重逆转乾坤，其中一队先落后比分，最后逆转获胜，即可获得最高388元彩金。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-01-25 18:20:19', 'updated_at': '2021-01-26 00:01:44'}, {'title': '【电竞荣耀5重】活动开启', 'content': '【电竞荣耀不朽，极竞5重嗨翻天】活动狂欢开启中，一重：电竞霸王餐最高可返4888元，二重：风暴龙王来袭最高可获588元，触发事件可瓜分奖池。三重：英雄联盟击杀秀最高可拿1888元。四重：掌控全场最高可拿1888元。五重：强者为王最高可拿888元彩金。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-01-20 19:45:25', 'updated_at': '2021-01-21 00:00:26'}, {'title': '豪礼折换彩金通知', 'content': '平台于2021年1月18日起豪礼奖品会以折换彩金形式发放。病毒无情人间有爱，礼物运输更是加重了疫情的传播，天博为了给您提供更安全、更高效的服务，现决定对豪礼运输物流改造升级，做到“不接触、少接触”，减少病毒的传播！让我们共同努力，抵抗疫情！', 'url': '', 'created_at': '2021-01-18 21:33:04', 'updated_at': '2021-01-18 21:44:50'}, {'title': '欢迎加入天博', 'content': '欢迎加入天博体育大家庭，自注册日起，14天内完成超简单新手任务，即享拿不停彩金奖励，最高可得188元！任务详情请点击新手活动进行查看，感谢您对天博的选择与信赖！', 'url': '', 'created_at': '2020-03-09 15:46:06', 'updated_at': '2021-01-17 21:24:23'}, {'title': '【天博优惠活动分享】上线通知', 'content': '天博优惠活动分享已正式上线，进入指定活动落地页点击分享按钮给您的朋友推荐天博优惠活动，即可获得最高238元推荐彩金奖励！立即分享！', 'url': '', 'created_at': '2020-12-03 11:07:38', 'updated_at': '2020-12-03 19:24:20'}, {'title': '【回归三重奏】活动开启', 'content': '【回归三重奏 彩金享不停】活动火热开启中，老用户回归七日内可享受【存送彩金额外享】【每日投注享嘉奖】以及【签到彩金翻倍赢】三大特权，满足指定条件即可获得对应彩金奖励，累计最高可获2357元彩金福利。前往查看！', 'url': '', 'created_at': '2020-10-31 23:37:00', 'updated_at': '2020-11-01 00:02:53'}, {'title': '天博体育赞助', 'content': '天博体育品牌实力在线，赞助世界足坛传奇队伍【克罗地亚国家队】成为其亚洲区独家合作伙伴，携手全球形象大使【达沃·苏克】邀您一起问鼎欧洲杯!', 'url': '', 'created_at': '2020-02-16 16:50:17', 'updated_at': '2020-07-24 18:01:26'}, {'title': '天博体育，经典再续', 'content': '亲爱的用户，欢迎进入天博体育官网。天博体育经典再续，极致服务优质体验，行业游戏全面覆盖。注册立享迎新钜惠，每日签到彩金相伴，以诚为本提款无忧，享你所赢赢你所想。', 'url': '', 'created_at': '2020-02-10 02:12:15', 'updated_at': '2020-07-24 18:01:24'}, {'title': '天博合营计划', 'content': '天博【联盟合营计划】已开启，最大扶持力度，行内最高返佣，天博邀您强强联手，共创佳绩！更多详情请查看首页【合营计划】', 'url': '', 'created_at': '2020-02-10 02:59:29', 'updated_at': '2020-07-24 18:01:19'}]}, 'otherBanner': {'banner': [], 'notice': [{'title': '【VIP免费红包】', 'content': '免费红包全新升级，点击APP首页公告栏下方【VIP】按钮进入VIP详情页，免费月红包、周红包点击就送！', 'url': '', 'created_at': '2021-02-03 22:18:54', 'updated_at': '2021-02-20 21:37:02'}, {'title': '【天博捕鱼】活动通知', 'content': '【天博捕鱼】超值活动即将来袭，活动期间在天博捕鱼有效投注额达到对应等级即可参与瓜分对应奖池，当日满足投注要求的会员次日即可参与瓜分最高88888元奖励。累计有效投注可算入排行榜，登顶榜首一人独享8888元。详情请前往【 优惠活动】查看专题活动。温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-20 21:36:49', 'updated_at': '2021-02-20 21:36:53'}, {'title': '【足球赢上赢】上线通知', 'content': 'OB体育答谢福利火热来袭，活动期间内指定在OB体育场馆投注单关足球早盘或滚球的赛事，投注的赔率在港赔0.50 - 0.97 或 欧赔1.50 - 1.97获胜，水位即加赠一点，当日投注次日派彩。详情请前往【 优惠活动】查看专题活动。温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-19 23:55:58', 'updated_at': '2021-02-20 00:00:14'}, {'title': '天博最新网址', 'content': '亲爱的天博用户，请认准天博体育官方最新网址【tianbo.com、tbvip.com、tbtyvip.com、www.tbvip28.com】，首页下方扫描二维码下载APP，体验指尖博弈乐趣！', 'url': '', 'created_at': '2020-01-26 23:40:08', 'updated_at': '2021-02-19 12:45:47'}, {'title': '【彩票复市】', 'content': '天博小青龙提醒您：部分福彩、体彩、快乐彩等彩种已结束官方春节休市，2月19日将陆续恢复开奖。我平台各彩票场馆均可正常进行上述彩种娱乐，温馨常在初心如故！', 'url': '', 'created_at': '2021-02-18 22:30:14', 'updated_at': '2021-02-19 00:01:51'}, {'title': '【天博乐在棋中】活动通知', 'content': '【天博乐在“棋”中】活动火热开启中，活动期间，投注天博棋牌总有效投注额达到对应档位，即可获得最高188彩金奖励，若产生负盈利≥500元，还可获得额外亏损救援金，最高188元。当天领取活动奖励后即计算为签到1次，根据累计签到次数，最高可领取38元签到彩金。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-13 21:07:37', 'updated_at': '2021-02-17 13:40:30'}, {'title': '【反馈有礼】上线通知', 'content': '天博综合APP、体育APP、H5目前均已上线2.0全新版本，凡是在活动期间提供优化意见的会员，一经采纳即可获得18-188元的彩金奖励。意见嘉奖参与方式：点击【我的】-【意见反馈】-【提交反馈】', 'url': '', 'created_at': '2021-02-17 02:42:53', 'updated_at': '2021-02-17 02:42:57'}, {'title': '【OB体育场馆】上线通知', 'content': '【天博体育】懂您所需！即日起（2月10日）将为您提供极致体验，全新【OB体育场馆】震撼来袭！投注、视频、尽在掌握，一览无余！综合APP端、 WEB端、H5端优先上线。天博致力于为您提供最佳优质体验！', 'url': '', 'created_at': '2021-02-10 16:03:09', 'updated_at': '2021-02-10 16:03:18'}, {'title': '移动端2.0上线', 'content': '新主题【香槟金】焕新启用。懂您所想，知您所需。立即更新开启天博2.0！', 'url': '', 'created_at': '2021-02-09 18:18:23', 'updated_at': '2021-02-10 16:02:14'}, {'title': '【金牛贺岁】活动开启', 'content': '【金牛贺岁开福袋】活动已开启！活动期间会员在eBET真人场馆进行投注，每日12:00:00-23:59:59 ，每1个小时均有100个福袋名额待开启，玩家通过参与投注来获得抽奖机会，数量有限，先开先得。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-06 23:16:53', 'updated_at': '2021-02-10 12:00:51'}, {'title': '【金牛赐福】活动开启', 'content': '【金牛赐福闹新春，四重豪礼齐贺岁】活动开启中，第一重金牛纳福，场馆贺新礼：每日点亮祝福词条，即可领取对应彩金。第二重牛气冲天，集字享彩：集齐所有字符即可参与瓜分888888彩金。第三重新春存送惠，拜年红包雨：投注嘉奖单日最高可领12888元。两日共48波红包雨全天不间断。第四重元宵庆团圆，福气溢满天：吃元宵得彩金，最高可得8888元。元宵红包雨全天不间断。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-07 23:52:55', 'updated_at': '2021-02-08 14:31:27'}, {'title': '【BG牛转乾坤】活动开启', 'content': '2021/02/07~2021/02/16玩BG真人畅享百万红包。每局有效投注，无论输赢，皆有机会获得现金红包。并累积六局，皆有机会获得额外的惊喜红包。详情请前往【 BG真人视讯】查看专题活动。温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-02-07 00:03:02', 'updated_at': '2021-02-07 00:03:08'}, {'title': '温馨提示', 'content': '为了保障您的财产利益以及个人信息安全，请勿相信任何非官网获取存款方式。存款请于天博官网获取支付订单，及时与在线客服确认收款方是否具备代充资质，谨防资金流失！', 'url': '', 'created_at': '2021-02-04 18:08:44', 'updated_at': '2021-02-04 18:10:27'}, {'title': '【笔笔存送】', 'content': '【USDT】笔笔存送正在进行中，新老会员均可享受。日日可享存送优惠，单日最高赠送888元彩金。详情请前往【优惠活动查看】！', 'url': '', 'created_at': '2021-02-04 15:56:55', 'updated_at': '2021-02-04 15:57:05'}, {'title': '【篮球新玩法 燃爆IM】', 'content': '好消息！IM体育场馆新增NBA【ES-网络篮球2K20赛事】新玩法！届时您可前往进行查看和投注，体验更多乐趣尽在天博体育，祝您游戏愉快！', 'url': '', 'created_at': '2021-02-02 17:55:27', 'updated_at': '2021-02-02 17:55:32'}, {'title': '【事件嘉奖】活动开启', 'content': '【激情绿茵，事件嘉奖】活动焕新开启中，活动期间会员投注指定体育赛事，如赛事出现以下事件，会员可根据当场赛事累计有效投注额获得对应等级彩金奖励，不同事件彩金可叠加。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-01-25 06:44:43', 'updated_at': '2021-02-01 13:05:02'}, {'title': '【活动延期】', 'content': '为回馈广大会员的支持与厚爱【天博VIP 回归专享】【回归三重奏 彩金享不停】【天博VIP专属 乐享双重福利】活动现以延期至2021年2月28日23:59:59。前往了解！', 'url': '', 'created_at': '2020-12-28 17:03:11', 'updated_at': '2021-01-31 14:31:24'}, {'title': '【体育巅峰对决】活动开启', 'content': '【体育巅峰对决，四重好礼嗨翻天】活动已开启，一重焦点赛事巡回，根据累计有效投注额发放巡游彩金奖励，单站点最高可获1888元。二重返水加持，根据VIP等级获得返水加持，最高可获15888元。三重盈利嘉奖，累计投注额满足对应要求将获得额外加奖，最高嘉奖1888元彩金。四重逆转乾坤，其中一队先落后比分，最后逆转获胜，即可获得最高388元彩金。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-01-25 18:20:19', 'updated_at': '2021-01-26 00:01:44'}, {'title': '【电竞荣耀5重】活动开启', 'content': '【电竞荣耀不朽，极竞5重嗨翻天】活动狂欢开启中，一重：电竞霸王餐最高可返4888元，二重：风暴龙王来袭最高可获588元，触发事件可瓜分奖池。三重：英雄联盟击杀秀最高可拿1888元。四重：掌控全场最高可拿1888元。五重：强者为王最高可拿888元彩金。详情请前往【优惠活动】查看！温馨提示：打开消息推送即可接收活动开启提醒！', 'url': '', 'created_at': '2021-01-20 19:45:25', 'updated_at': '2021-01-21 00:00:26'}, {'title': '豪礼折换彩金通知', 'content': '平台于2021年1月18日起豪礼奖品会以折换彩金形式发放。病毒无情人间有爱，礼物运输更是加重了疫情的传播，天博为了给您提供更安全、更高效的服务，现决定对豪礼运输物流改造升级，做到“不接触、少接触”，减少病毒的传播！让我们共同努力，抵抗疫情！', 'url': '', 'created_at': '2021-01-18 21:33:04', 'updated_at': '2021-01-18 21:44:50'}, {'title': '欢迎加入天博', 'content': '欢迎加入天博体育大家庭，自注册日起，14天内完成超简单新手任务，即享拿不停彩金奖励，最高可得188元！任务详情请点击新手活动进行查看，感谢您对天博的选择与信赖！', 'url': '', 'created_at': '2020-03-09 15:46:06', 'updated_at': '2021-01-17 21:24:23'}, {'title': '【天博优惠活动分享】上线通知', 'content': '天博优惠活动分享已正式上线，进入指定活动落地页点击分享按钮给您的朋友推荐天博优惠活动，即可获得最高238元推荐彩金奖励！立即分享！', 'url': '', 'created_at': '2020-12-03 11:07:38', 'updated_at': '2020-12-03 19:24:20'}, {'title': '【回归三重奏】活动开启', 'content': '【回归三重奏 彩金享不停】活动火热开启中，老用户回归七日内可享受【存送彩金额外享】【每日投注享嘉奖】以及【签到彩金翻倍赢】三大特权，满足指定条件即可获得对应彩金奖励，累计最高可获2357元彩金福利。前往查看！', 'url': '', 'created_at': '2020-10-31 23:37:00', 'updated_at': '2020-11-01 00:02:53'}]}, 'specialNotice': {'title': '【VIP免费红包】', 'content': '免费红包全新升级，点击APP首页公告栏下方【VIP】按钮进入VIP详情页，免费月红包、周红包点击就送！', 'url': '', 'created_at': '2021-02-03 22:18:54', 'updated_at': '2021-02-20 21:37:02'}}}
+[2021-02-21 14:12:54,911] - INFO: --------test is pass--------
+[2021-02-21 14:12:54,912] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_channelListV5.ChannelListV5</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',1)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_channelListV5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt2_1: [2021-02-21 14:12:59,923] - INFO: --------test is begin--------
+[2021-02-21 14:12:59,924] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:12:59,925] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:12:59,925] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:00,063] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a55deacc7fbacbc78c8cf6b1afe261937', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:00,064] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/pay/channelListV5?source_id=2&amp;mode=2
+[2021-02-21 14:13:00,064] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a55deacc7fbacbc78c8cf6b1afe261937'}
+[2021-02-21 14:13:00,244] - INFO: 请求结果:{'data': [{'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d28.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d28.png', 'bank_name': 'OBT', 'card_name': '网银转账', 'day_max_discount': '0', 'fyAliStatus': '1', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d28@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d28@3x.png', 'isRecommend': '1', 'max_money': '49999', 'min_money': '100', 'obt_type': '2', 'on_line': '0', 'percent': '0.0', 'type': '28'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d14.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d14.png', 'bank_name': 'FYLX', 'card_name': '银行卡转账', 'day_max_discount': '', 'fyAliStatus': '1', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d14@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d14@3x.png', 'isRecommend': '1', 'max_money': '49999', 'min_money': '300', 'on_line': '0', 'percent': '0.0', 'type': '14'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d1.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d1.png', 'card_name': '网银支付', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d1@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d1@3x.png', 'isRecommend': '2', 'on_line': '1', 'type': '1'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d2.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d2.png', 'bank_max_money': '0', 'bank_min_money': '0', 'card_name': '微信', 'day_max_discount': '', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d2@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d2@3x.png', 'isRecommend': '2', 'max_money': '0', 'min_money': '0', 'on_line': '0', 'percent': '0', 'type': '2', 'wechat_amount_list': [{'amount': '100', 'status': '0'}, {'amount': '200', 'status': '1'}, {'amount': '300', 'status': '1'}, {'amount': '500', 'status': '0'}, {'amount': '600', 'status': '0'}, {'amount': '700', 'status': '0'}, {'amount': '800', 'status': '0'}, {'amount': '900', 'status': '0'}, {'amount': '1000', 'status': '0'}], 'wechat_type': '2'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d13.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d13.png', 'bank_name': '极速支付宝', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d13@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d13@3x.png', 'isRecommend': '2', 'on_line': '1', 'type': '13'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d3.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d3.png', 'card_name': '支付宝', 'day_max_discount': '', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d3@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d3@3x.png', 'isRecommend': '2', 'on_line': '1', 'percent': '0', 'type': '3'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d5.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d5.png', 'card_name': '银联快捷', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d5@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d5@3x.png', 'isRecommend': '2', 'on_line': '1', 'type': '5'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d7.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d7.png', 'card_name': '银联云闪付', 'day_max_discount': '', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d7@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d7@3x.png', 'isRecommend': '2', 'max_money': '10000', 'min_money': '300', 'on_line': '0', 'percent': '0', 'type': '7'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d19.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d19.png', 'bank_name': 'ABT', 'card_name': '支付宝扫码', 'day_max_discount': '0', 'fyAliStatus': '2', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d19@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d19@3x.png', 'isRecommend': '2', 'max_money': '30000', 'min_money': '100', 'obt_type': '1', 'on_line': '0', 'percent': '0.0', 'type': '29'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d1029.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d1029.png', 'bank_name': 'NABT', 'card_name': '支付宝转卡', 'day_max_discount': '0', 'fyAliStatus': '3', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d1029@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d1029@3x.png', 'isRecommend': '2', 'max_money': '30000', 'min_money': '100', 'obt_type': '1', 'on_line': '0', 'percent': '0.0', 'type': '1029'}, {'android_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d1111.png', 'android_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/android/d1111.png', 'card_name': '人工充值', 'fyAliStatus': '6', 'ios_icon': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d1111@3x.png', 'ios_icon_chosen': 'https://static.bpa7g4.com/wap/images/app/deposit/ios/d1111@3x.png', 'isRecommend': '1', 'on_line': '0', 'type': '1111', 'url': 'https://h5.rfd92q.com/api/v5/chat/chatbox?key=echat_finance&amp;merchant=echat'}], 'flags': '1', 'message': '查询成功', 'status': 'success', 'status_code': 6000}
+[2021-02-21 14:13:00,244] - INFO: --------test is pass--------
+[2021-02-21 14:13:00,244] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_feedback.Feedback</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_feedback</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt3_1: [2021-02-21 14:13:05,246] - INFO: --------test is begin--------
+[2021-02-21 14:13:05,248] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:05,248] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:05,249] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:05,373] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a3c9dd412a75a20ee3627926af450748f', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:05,374] - INFO: 获取反馈列表请求url:http://pre-h5.theyyone.com/api/v2/feedbacktypelist
+[2021-02-21 14:13:05,374] - INFO: 获取反馈列表请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a3c9dd412a75a20ee3627926af450748f'}
+[2021-02-21 14:13:05,501] - INFO: 获取反馈列表请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '查询成功', 'data': {'feedbacktypelist': [{'type_id': 2, 'typetitle': '财务问题'}, {'type_id': 3, 'typetitle': '账号问题'}, {'type_id': 4, 'typetitle': '游戏问题'}, {'type_id': 5, 'typetitle': '活动问题'}, {'type_id': 6, 'typetitle': '其他问题'}]}}
+[2021-02-21 14:13:05,501] - INFO: 意见反馈请求url:http://pre-h5.theyyone.com/api/v2/feedback
+[2021-02-21 14:13:05,502] - INFO: 意见反馈请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '610', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a3c9dd412a75a20ee3627926af450748f'}
+[2021-02-21 14:13:05,502] - INFO: 意见反馈请求body:{"name": "judy92","title": "测试标题","content": "测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容","type": "4"}
+[2021-02-21 14:13:05,637] - INFO: 意见反馈请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '谢谢您的反馈！', 'data': None}
+[2021-02-21 14:13:05,638] - INFO: --------test is pass--------
+[2021-02-21 14:13:05,638] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_gametypeapilist.Gametypeapilist</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='pt4_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_gametypeapilist</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt4_1'>通过</button>
+    <div id='div_pt4_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt4_1: [2021-02-21 14:13:10,642] - INFO: --------test is begin--------
+[2021-02-21 14:13:10,643] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:10,644] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:10,644] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:10,771] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a94ed992ef3518cc60348d44b67ece086', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:10,773] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/gametypeapilist?show=44%2C45%2C32%2C47%2C49%2C50%2C51%2C46%2C52
+[2021-02-21 14:13:10,774] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a94ed992ef3518cc60348d44b67ece086'}
+[2021-02-21 14:13:10,921] - INFO: 请求结果:{'data': {'egame': [{'APIID': '52', 'AndroidMaintain': '', 'AndroidsportMaintain': '', 'H5Maintain': '', 'IosMaintain': '', 'IossportMaintain': '', 'JumpH5': '', 'PcMaintain': '', 'id': '52', 'api_name': 'YBEG', 'api_title': '捕鱼游戏', 'api_domain': '', 'api_id': '52', 'api_money': '', 'is_demo': '', 'prefix': '', 'on_line': '0', 'sort': '', 'created_at': '', 'updated_at': '', 'maintain_starttime': '', 'maintain_endtime': '', 'cost': '', 'wallet': '', 'game_type': '3', 'maintain_desc': '', 'time_desc': '', 'game_code': '', 'source': '', 'isFavor': '0', 'eventCount': '4', 'isFavorWeight': 0}, {'APIID': '35', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '35', 'api_name': 'PG', 'api_title': 'PG电子', 'api_domain': '', 'api_id': '35', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'pg', 'on_line': '0', 'sort': '12', 'created_at': '2018-06-11 20:14:26', 'updated_at': '2021-02-10 09:32:21', 'maintain_starttime': '2020-02-28 10:00:00', 'maintain_endtime': '2020-02-28 11:00:00', 'cost': '6', 'wallet': '0', 'game_type': '3', 'maintain_desc': 'PG电子维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '66', 'isFavorWeight': 0}, {'APIID': '28', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '28', 'api_name': 'PP', 'api_title': 'PP电子', 'api_domain': '', 'api_id': '28', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'ccs', 'on_line': '0', 'sort': '13', 'created_at': '2018-01-22 17:14:57', 'updated_at': '2021-02-09 17:56:27', 'maintain_starttime': '2020-01-28 00:00:00', 'maintain_endtime': '2020-01-31 00:00:00', 'cost': '6', 'wallet': '0', 'game_type': '3', 'maintain_desc': 'PP电子场馆维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '165', 'isFavorWeight': 0}, {'APIID': '6', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '6', 'api_name': 'PT', 'api_title': 'PT电子', 'api_domain': '', 'api_id': '6', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'sss', 'on_line': '0', 'sort': '14', 'created_at': '2017-02-03 09:03:51', 'updated_at': '2021-02-17 04:16:20', 'maintain_starttime': '2018-08-07 00:00:00', 'maintain_endtime': '2018-08-10 00:00:00', 'cost': '12', 'wallet': '0', 'game_type': '3', 'maintain_desc': 'PT电子维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '160', 'isFavorWeight': 0}, {'APIID': '7', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '7', 'api_name': 'MG', 'api_title': 'MG电子', 'api_domain': '', 'api_id': '7', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'bbb', 'on_line': '0', 'sort': '15', 'created_at': '2017-02-03 09:04:51', 'updated_at': '2021-01-15 20:44:04', 'maintain_starttime': '2019-01-01 00:00:00', 'maintain_endtime': '2019-01-01 00:00:00', 'cost': '8', 'wallet': '0', 'game_type': '3', 'maintain_desc': 'MG电子维护中，维护时间：12月06日21:05-另行通知 ,可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '270', 'isFavorWeight': 0}], 'esport': [{'APIID': '44', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '44', 'api_name': 'FYESPORTS', 'api_title': '泛亚电竞', 'api_domain': '', 'api_id': '44', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'fydj', 'on_line': '0', 'sort': '4', 'created_at': '2019-08-16 18:41:30', 'updated_at': '2021-01-15 20:22:08', 'maintain_starttime': '2020-05-18 05:25:12', 'maintain_endtime': '2020-05-19 00:00:00', 'cost': '6', 'wallet': '0', 'game_type': '8', 'maintain_desc': '泛亚电竞场馆维护中，维护完成时间另行通知，可前往其他场馆进行游戏，谢谢。', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '102', 'isFavorWeight': 0}, {'APIID': '38', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '38', 'api_name': 'IMESPORTS', 'api_title': 'IM电竞', 'api_domain': '', 'api_id': '38', 'api_money': '0.00', 'is_demo': '0', 'prefix': '11', 'on_line': '0', 'sort': '10', 'created_at': '2018-10-17 18:41:30', 'updated_at': '2021-01-19 11:00:23', 'maintain_starttime': '2020-05-19 08:00:00', 'maintain_endtime': '2020-05-19 12:00:00', 'cost': '10', 'wallet': '0', 'game_type': '8', 'maintain_desc': 'IM电竞维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '106', 'isFavorWeight': 0}, {'APIID': '40', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '40', 'api_name': 'SB', 'api_title': '沙巴电竞', 'api_domain': '', 'api_id': '40', 'api_money': '0.00', 'is_demo': '0', 'prefix': '111', 'on_line': '0', 'sort': '3', 'created_at': '2018-11-06 17:09:00', 'updated_at': '2021-01-27 20:01:16', 'maintain_starttime': '2020-03-30 11:30:00', 'maintain_endtime': '2020-03-30 12:35:00', 'cost': '9', 'wallet': '0', 'game_type': '8', 'maintain_desc': '沙巴场馆维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '147', 'isFavorWeight': 0}], 'livegame': [{'APIID': '50', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '50', 'api_name': 'YBZR', 'api_title': '天博真人', 'api_domain': '', 'api_id': '50', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'ybzr', 'on_line': '0', 'sort': '4', 'created_at': '2020-05-28 18:58:50', 'updated_at': '2021-02-05 05:30:35', 'maintain_starttime': '2020-05-11 18:58:53', 'maintain_endtime': '2020-05-11 18:58:53', 'cost': '5', 'wallet': '0', 'game_type': '1', 'maintain_desc': '天博真人维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '1', 'isFavor': '1', 'eventCount': '146', 'isFavorWeight': 99999999998}, {'APIID': '49', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '49', 'api_name': 'WMZR', 'api_title': 'WM真人', 'api_domain': '', 'api_id': '49', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'wm', 'on_line': '0', 'sort': '5', 'created_at': '2020-05-10 13:22:32', 'updated_at': '2021-02-15 14:26:51', 'maintain_starttime': '2020-08-02 22:15:00', 'maintain_endtime': '2020-08-03 00:00:00', 'cost': '5', 'wallet': '0', 'game_type': '1', 'maintain_desc': 'WM真人视讯场馆维护中，可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '147', 'isFavorWeight': 0}, {'APIID': '51', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '51', 'api_name': 'BGZR', 'api_title': 'BG真人', 'api_domain': '', 'api_id': '51', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'bgzr', 'on_line': '0', 'sort': '6', 'created_at': '2020-05-03 14:25:37', 'updated_at': '2021-02-17 04:02:02', 'maintain_starttime': '2020-05-27 02:00:00', 'maintain_endtime': '2020-05-27 08:00:00', 'cost': '6', 'wallet': '0', 'game_type': '1', 'maintain_desc': 'BG真人视讯场馆维护中，可前往其它场馆进行游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '148', 'isFavorWeight': 0}, {'APIID': '3', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '3', 'api_name': 'AG', 'api_title': 'AG真人', 'api_domain': '', 'api_id': '3', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'ddd', 'on_line': '0', 'sort': '7', 'created_at': '2017-02-03 09:00:51', 'updated_at': '2021-01-15 20:48:18', 'maintain_starttime': '2018-08-08 08:00:00', 'maintain_endtime': '2018-09-07 08:00:00', 'cost': '6', 'wallet': '0', 'game_type': '1', 'maintain_desc': '游戏场馆维护中~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '50', 'isFavorWeight': 0}, {'APIID': '22', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '22', 'api_name': 'EBET', 'api_title': 'EBET真人', 'api_domain': '', 'api_id': '22', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'sad', 'on_line': '0', 'sort': '8', 'created_at': '2017-12-22 18:08:51', 'updated_at': '2021-01-28 08:40:30', 'maintain_starttime': '2020-05-21 06:00:00', 'maintain_endtime': '2020-05-21 08:00:00', 'cost': '6.5', 'wallet': '0', 'game_type': '1', 'maintain_desc': 'EBET真人视讯场馆维护中，可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '22', 'isFavorWeight': 0}], 'lottery': [{'APIID': '46', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '46', 'api_name': 'BOBCP', 'api_title': '天博彩票', 'api_domain': '', 'api_id': '46', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'yb', 'on_line': '0', 'sort': '8', 'created_at': '2020-06-08 16:29:18', 'updated_at': '2021-02-11 06:01:47', 'maintain_starttime': '2020-06-08 16:04:28', 'maintain_endtime': '2020-06-08 16:04:33', 'cost': '6', 'wallet': '0', 'game_type': '4', 'maintain_desc': '天博彩票场馆维护中，维护期间请前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '1', 'isFavor': '1', 'eventCount': '145', 'isFavorWeight': 99999999997}, {'APIID': '34', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '34', 'api_name': 'SG', 'api_title': '双赢彩票', 'api_domain': '', 'api_id': '34', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'cxz', 'on_line': '0', 'sort': '9', 'created_at': '2018-04-17 17:33:47', 'updated_at': '2021-02-11 11:55:40', 'maintain_starttime': '2020-02-01 07:26:04', 'maintain_endtime': '2021-03-01 07:26:23', 'cost': '5', 'wallet': '0', 'game_type': '4', 'maintain_desc': '双赢彩票场馆维护中，可前往其它场馆进行游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '22', 'isFavorWeight': 0}, {'APIID': '41', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '41', 'api_name': 'VR', 'api_title': 'VR彩票', 'api_domain': '', 'api_id': '41', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'aszx', 'on_line': '0', 'sort': '10', 'created_at': '2018-11-14 21:22:29', 'updated_at': '2021-02-18 09:02:08', 'maintain_starttime': '2020-06-17 15:25:00', 'maintain_endtime': '2020-06-17 18:00:00', 'cost': '7', 'wallet': '0', 'game_type': '4', 'maintain_desc': 'VR彩票场馆维护中，可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '36', 'isFavorWeight': 0}, {'APIID': '30', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '30', 'api_name': 'TCG', 'api_title': 'TCG彩票', 'api_domain': '', 'api_id': '30', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'saz', 'on_line': '0', 'sort': '11', 'created_at': '2018-03-28 17:52:55', 'updated_at': '2021-02-08 06:02:40', 'maintain_starttime': '2020-03-07 05:30:00', 'maintain_endtime': '2020-05-07 06:00:00', 'cost': '6', 'wallet': '0', 'game_type': '4', 'maintain_desc': 'TCG彩票维护中，维护时间2021年1月12日04:55，预计维护完成时间05:20，可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '22', 'isFavorWeight': 0}], 'poker': [{'APIID': '47', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '47', 'api_name': 'TBQP', 'api_title': 'TB棋牌', 'api_domain': '', 'api_id': '47', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'yb', 'on_line': '0', 'sort': '10', 'created_at': '2020-03-03 11:00:18', 'updated_at': '2021-01-15 20:46:41', 'maintain_starttime': '2020-03-06 00:00:00', 'maintain_endtime': '2020-03-07 14:55:50', 'cost': '6', 'wallet': '0', 'game_type': '6', 'maintain_desc': '天博棋牌场馆维护中，维护时间2020年6月02日07:00进行维护，维护完成时间08:00，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '1', 'isFavor': '1', 'eventCount': '25', 'isFavorWeight': 99999999996}, {'APIID': '43', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '43', 'api_name': 'GFLC', 'api_title': '高登棋牌', 'api_domain': '', 'api_id': '43', 'api_money': '0.00', 'is_demo': '0', 'prefix': '1', 'on_line': '0', 'sort': '11', 'created_at': '2019-04-21 17:56:45', 'updated_at': '2021-01-26 11:02:02', 'maintain_starttime': '2020-07-02 17:30:00', 'maintain_endtime': '2020-07-02 18:30:00', 'cost': '6', 'wallet': '0', 'game_type': '6', 'maintain_desc': '高登棋牌场馆维护中，可前往其它场馆进行游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '25', 'isFavorWeight': 0}, {'APIID': '45', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '45', 'api_name': 'TMQP', 'api_title': '天美棋牌', 'api_domain': '', 'api_id': '45', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'tmqp', 'on_line': '0', 'sort': '12', 'created_at': '2019-09-14 00:00:00', 'updated_at': '2021-01-26 12:07:53', 'maintain_starttime': '2020-03-11 08:55:00', 'maintain_endtime': '2020-03-03 23:59:59', 'cost': '6', 'wallet': '0', 'game_type': '6', 'maintain_desc': '天美棋牌场馆维护中，可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '15', 'isFavorWeight': 0}, {'APIID': '42', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '42', 'api_name': 'SY', 'api_title': 'IM棋牌', 'api_domain': '', 'api_id': '42', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'bbb', 'on_line': '0', 'sort': '15', 'created_at': '2019-03-01 23:23:55', 'updated_at': '2020-12-07 17:30:05', 'maintain_starttime': '2019-03-05 23:24:02', 'maintain_endtime': '2019-06-01 23:24:05', 'cost': '5', 'wallet': '0', 'game_type': '6', 'maintain_desc': '维护中', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '149', 'isFavorWeight': 0}], 'sport': [{'APIID': '32', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '32', 'api_name': 'SPORT', 'api_title': '天博体育', 'api_domain': '', 'api_id': '32', 'api_money': '0.00', 'is_demo': '0', 'prefix': '188bet', 'on_line': '0', 'sort': '1', 'created_at': '2019-08-18 10:47:05', 'updated_at': '2021-01-15 20:50:37', 'maintain_starttime': '2020-03-03 12:30:00', 'maintain_endtime': '2020-03-03 20:00:00', 'cost': '8.5', 'wallet': '0', 'game_type': '5', 'maintain_desc': '天博体育场馆维护中，维护开始时间11月19日10:20,维护完成时间16:00，可前往其它场馆进行游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '1', 'isFavor': '1', 'eventCount': '149', 'isFavorWeight': 99999999999}, {'APIID': '37', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '37', 'api_name': 'IMSPORT', 'api_title': 'IM体育', 'api_domain': 'api.38373.com', 'api_id': '37', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'ads', 'on_line': '0', 'sort': '2', 'created_at': '2018-09-29 11:21:32', 'updated_at': '2021-01-12 14:36:53', 'maintain_starttime': '2020-05-05 10:55:00', 'maintain_endtime': '2020-05-05 18:45:00', 'cost': '7', 'wallet': '0', 'game_type': '5', 'maintain_desc': 'IM体育场馆维护中，期间可前往其它场馆进行游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '610', 'isFavorWeight': 0}, {'APIID': '53', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '53', 'api_name': 'OBSPORT', 'api_title': 'OB体育', 'api_domain': '', 'api_id': '53', 'api_money': '0.00', 'is_demo': '0', 'prefix': 'OB', 'on_line': '0', 'sort': '2', 'created_at': '2021-02-06 15:44:49', 'updated_at': '2021-02-18 14:50:57', 'maintain_starttime': '2001-01-01 00:00:00', 'maintain_endtime': '2001-01-01 00:00:00', 'cost': '0', 'wallet': '0', 'game_type': '5', 'maintain_desc': '场馆维护中', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '148', 'isFavorWeight': 0}, {'APIID': '40', 'AndroidMaintain': '0', 'AndroidsportMaintain': '0', 'H5Maintain': '0', 'IosMaintain': '', 'IossportMaintain': '0', 'JumpH5': '0', 'PcMaintain': '0', 'id': '40', 'api_name': 'SB', 'api_title': '沙巴体育', 'api_domain': '', 'api_id': '40', 'api_money': '0.00', 'is_demo': '0', 'prefix': '111', 'on_line': '0', 'sort': '3', 'created_at': '2018-11-06 17:09:00', 'updated_at': '2021-01-27 20:01:16', 'maintain_starttime': '2020-03-30 11:30:00', 'maintain_endtime': '2020-03-30 12:35:00', 'cost': '9', 'wallet': '0', 'game_type': '5', 'maintain_desc': '沙巴场馆维护中，维护期间可前往其他场馆游戏，谢谢~', 'time_desc': '', 'game_code': '', 'source': '0', 'isFavor': '0', 'eventCount': '529', 'isFavorWeight': 0}]}, 'message': '查询成功', 'status_code': 6000}
+[2021-02-21 14:13:10,922] - INFO: --------test is pass--------
+[2021-02-21 14:13:10,922] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_AGBY.Launch_AGBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='pt5_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_AGBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_1'>通过</button>
+    <div id='div_pt5_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt5_1: [2021-02-21 14:13:15,931] - INFO: --------test is begin--------
+[2021-02-21 14:13:15,933] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:15,934] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:15,935] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:16,062] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a74ea94df966224eda608b3913398e000', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:16,064] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:16,065] - INFO: 请求body:{"api_name":"AG","game_code":"6","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:16,066] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a74ea94df966224eda608b3913398e000'}
+[2021-02-21 14:13:16,205] - INFO: 请求结果:{'data': {'html': 'https://gci.percats.com/forwardGame.do?params=KTk307tiD6x0QnugPC4bIDXWdqhTWJkXP7NFTo6AZ7hAS5vlA3tdQ0VPa8kKEn0g+zNJJmx4RsLaR+IAgZv8XLCDoPRbWY64VZnvuVjqkEq36UunTNKb+RnlTqRb7Wq9HgfNyjW3+cqDEV8AH++FpxWLOdQUgZ9DNWB92QSpTSTZjeHXdv3LRCP7ZM3pc3pvM6C1fHbl1Ns1wfNAJh8trg==&amp;key=6ec3f96656a8a8f73b1b0fd62df77f6c', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:16,206] - INFO: --------test is pass--------
+[2021-02-21 14:13:16,206] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_AGZR.Launch_AGZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',1)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='pt6_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_AGZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt6_1'>通过</button>
+    <div id='div_pt6_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt6_1: [2021-02-21 14:13:21,211] - INFO: --------test is begin--------
+[2021-02-21 14:13:21,213] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:21,213] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:21,213] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:21,346] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45aaf5b1ca6af78e54fb67600888890b50c', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:21,347] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:21,348] - INFO: 请求body:{"api_name":"AG","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:21,348] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45aaf5b1ca6af78e54fb67600888890b50c'}
+[2021-02-21 14:13:21,481] - INFO: 请求结果:{'data': {'html': 'https://gci.percats.com/forwardGame.do?params=KTk307tiD6x0QnugPC4bIDXWdqhTWJkXP7NFTo6AZ7hAS5vlA3tdQ0VPa8kKEn0g+zNJJmx4RsLaR+IAgZv8XLCDoPRbWY64VZnvuVjqkEq36UunTNKb+RnlTqRb7Wq9xSvO3JcXZaXgLvQ4uRjl+BWLOdQUgZ9DNWB92QSpTSRisb/gmAEjAyUqaoYBnTSoO6rbEAPBXXen92FM9oT3SQ==&amp;key=e634bf6d12cc4843dce1481dc6555f30', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:21,481] - INFO: --------test is pass--------
+[2021-02-21 14:13:21,481] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_BGZR.Launch_BGZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='pt7_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_BGZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt7_1'>通过</button>
+    <div id='div_pt7_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt7_1: [2021-02-21 14:13:26,490] - INFO: --------test is begin--------
+[2021-02-21 14:13:26,491] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:26,492] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:26,492] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:26,628] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a3b122c1cbf6ca4a5e08d07089700daf8', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:26,629] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:26,629] - INFO: 请求body:{"api_name":"BGZR","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:26,630] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a3b122c1cbf6ca4a5e08d07089700daf8'}
+[2021-02-21 14:13:26,772] - INFO: 请求结果:{'data': {'html': 'https://cdn-ali.fzdkcy.com/h.html?sn=vs06&amp;account=banana308&amp;uid=241587760&amp;token=vs060E66563011F7CD1F750D7B913d83&amp;mode=1&amp;locale=zh_CN&amp;cui=64', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:26,772] - INFO: --------test is pass--------
+[2021-02-21 14:13:26,773] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_EBETZR.Launch_EBETZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='pt8_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_EBETZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt8_1'>通过</button>
+    <div id='div_pt8_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt8_1: [2021-02-21 14:13:31,778] - INFO: --------test is begin--------
+[2021-02-21 14:13:31,779] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:31,780] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:31,781] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:31,907] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45afcd4dcaf14cb18e582d90218a0fe788e', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:31,909] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:31,910] - INFO: 请求body:{"api_name":"EBET","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:31,911] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45afcd4dcaf14cb18e582d90218a0fe788e'}
+[2021-02-21 14:13:32,035] - INFO: 请求结果:{'data': {'html': 'https://ebcn.ysstgf.cn/h5/0e37df?ts=1613888012&amp;username=banana308&amp;accessToken=1I9xe0q2B8LOg66Fs9JCGf0sGu73045O', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:32,036] - INFO: --------test is pass--------
+[2021-02-21 14:13:32,037] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_FYDJ.Launch_FYDJ</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',1)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='pt9_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_FYDJ</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt9_1'>通过</button>
+    <div id='div_pt9_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt9_1: [2021-02-21 14:13:37,041] - INFO: --------test is begin--------
+[2021-02-21 14:13:37,043] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:37,043] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:37,043] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:37,180] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a1924e58a029eea00be36df92873fd483', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:37,181] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:37,182] - INFO: 请求body:{"api_name":"FYESPORTS","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:37,182] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a1924e58a029eea00be36df92873fd483'}
+[2021-02-21 14:13:37,388] - INFO: 请求结果:{'data': {'html': 'https://tianbo.jd-256.top/start.html?t=eyJhcGkiOlsiaHR0cHM6Ly9hcGkudmVsaW5rLm5ldDo4ODg4Il0sInRva2VuIjoiNjlhZDQ4M2U3Mjc0NGY0MWE5ZjkzZjJlYjlmYmVjYjIiLCJsYW5ndWFnZSI6IkNITiIsInZlcnNpb24iOiIxLjIuMiIsIm1hdGNoSWQiOjAsImdhbWVJZCI6MH0=', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:37,388] - INFO: --------test is pass--------
+[2021-02-21 14:13:37,389] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_GDQP.Launch_GDQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='pt10_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_GDQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt10_1'>通过</button>
+    <div id='div_pt10_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt10_1'>通过</button>
+    <div id='div_pt10_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt10_1: [2021-02-21 14:13:42,391] - INFO: --------test is begin--------
+[2021-02-21 14:13:42,392] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:42,393] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:42,393] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:42,525] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45aff6d019051e4979fe40f92115839e2a6', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:42,525] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:42,526] - INFO: 请求body:
+{"api_name":"GFLC","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:42,526] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45aff6d019051e4979fe40f92115839e2a6'}
+[2021-02-21 14:13:42,795] - INFO: 请求结果:{'data': {'html': 'https://url.gfhub.cc/launch/l_jytjA', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:42,796] - INFO: --------test is pass--------
+[2021-02-21 14:13:42,796] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_IMDJ.Launch_IMDJ</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='pt11_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_IMDJ</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt11_1'>通过</button>
+    <div id='div_pt11_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt11_1'>通过</button>
+    <div id='div_pt11_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt11_1: [2021-02-21 14:13:47,799] - INFO: --------test is begin--------
+[2021-02-21 14:13:47,801] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:47,802] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:47,803] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:47,942] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a87e7504394ff28f7f10df99efc5dbef5', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:47,944] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:47,945] - INFO: 请求body:{"api_name":"IMESPORTS","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:47,946] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a87e7504394ff28f7f10df99efc5dbef5'}
+[2021-02-21 14:13:48,092] - INFO: 请求结果:{'data': {'html': 'https://esports.imespgotad.com/mobile.aspx?timestamp=agxkVq8lcdtY/tABBFO5/cJu5p04rrga0WKzpNCnTMA=&amp;token=TB_IM_ESPORT_LOGIN_banana308&amp;LanguageCode=1&amp;streamerLiveStream=0', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:48,093] - INFO: --------test is pass--------
+[2021-02-21 14:13:48,094] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_IMQP.Launch_IMQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='pt12_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_IMQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt12_1'>通过</button>
+    <div id='div_pt12_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt12_1'>通过</button>
+    <div id='div_pt12_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt12_1: [2021-02-21 14:13:53,108] - INFO: --------test is begin--------
+[2021-02-21 14:13:53,109] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:53,109] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:53,110] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:53,393] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a8c013350d01c93e978645189d0e35005', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:53,394] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:53,395] - INFO: 请求body:{"api_name":"SY","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:53,395] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a8c013350d01c93e978645189d0e35005'}
+[2021-02-21 14:13:53,831] - INFO: 请求结果:{'data': {'html': 'https://gmgpk.qipaipub.com/?p=VpAMes6Yl2bENEVtO8TT8h7vWGRg9deGkTxSPiAB6HZ4MUVX1zMnfe8P3kgLG5RG7DGg5Ic3VCalLwD9NEekCESWNwLlSmxlOEfSWA8qzu%2Bg%2FMpoh%2FQs%2FSgx%2BVROYbTnnSVQVkt27FpSTo3qPqeu3%2Bak%2F%2FMU0AyBC22zVDXd9vhToWHZlE9S9XDJRYzoEjT8wFNC8qBtC2p%2FAe0FvLks2g%3D%3D', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:53,831] - INFO: --------test is pass--------
+[2021-02-21 14:13:53,832] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_IMTY.Launch_IMTY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',1)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='pt13_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_IMTY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt13_1'>通过</button>
+    <div id='div_pt13_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt13_1'>通过</button>
+    <div id='div_pt13_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt13_1: [2021-02-21 14:13:58,843] - INFO: --------test is begin--------
+[2021-02-21 14:13:58,845] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:13:58,846] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:13:58,847] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:13:58,983] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a6a9d82ee5c848545501e87e9329c5a2c', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:13:58,986] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:13:58,987] - INFO: 请求body:{"api_name":"IMSPORT","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:13:58,987] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a6a9d82ee5c848545501e87e9329c5a2c'}
+[2021-02-21 14:13:59,159] - INFO: 请求结果:{'data': {'html': 'https://sport.imsstyob.com/mobilesitev2/?timestamp=U2YQ1EQ9D9U2If/654R5fu7Sl4qHxyQFQf0hIU63V8Y=&amp;token=TB_IM_SPORT_LOGIN_banana308&amp;LanguageCode=1', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:13:59,160] - INFO: --------test is pass--------
+[2021-02-21 14:13:59,161] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_PTBY.Launch_PTBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='pt14_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_PTBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt14_1'>通过</button>
+    <div id='div_pt14_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt14_1'>通过</button>
+    <div id='div_pt14_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt14_1: [2021-02-21 14:14:04,172] - INFO: --------test is begin--------
+[2021-02-21 14:14:04,176] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:04,178] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:04,180] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:04,312] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ac53e7b53733f1b71e03e440154da84cb', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:04,313] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:04,313] - INFO: 请求body:
+{"api_name":"PT","game_code":"cashfi","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:04,314] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ac53e7b53733f1b71e03e440154da84cb'}
+[2021-02-21 14:14:04,477] - INFO: 请求结果:{'data': {'html': 'https://roshan88.com/ae/DF/LoginH5.aspx?token=cf2f354014082bf92a7f4880ae1aaf265202a164dca1a881e9c2eb42bc1dc4c7959f8fadeb80dc8b3c092d5259182ae403393217b7f3738818c2c9883c21999eb83267a6e7a0e77282572a567da3732f', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:04,477] - INFO: --------test is pass--------
+[2021-02-21 14:14:04,478] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_SBTY.Launch_SBTY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='pt15_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_SBTY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt15_1'>通过</button>
+    <div id='div_pt15_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt15_1'>通过</button>
+    <div id='div_pt15_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt15_1: [2021-02-21 14:14:09,479] - INFO: --------test is begin--------
+[2021-02-21 14:14:09,480] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:09,480] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:09,481] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:09,606] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a658f0c1f232d3150ff25b203151961cc', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:09,610] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:09,611] - INFO: 请求body:{"api_name":"SB","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:09,613] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a658f0c1f232d3150ff25b203151961cc'}
+[2021-02-21 14:14:09,871] - INFO: 请求结果:{'data': {'html': 'https://ismart.a0241.sbtyboga.com/Deposit_ProcessLogin.aspx?lang=zhcn&amp;token=VAYiSHHVMkCUncd45fy1aw&amp;DirectLogin=true', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:09,873] - INFO: --------test is pass--------
+[2021-02-21 14:14:09,875] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_SYCP.Launch_SYCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='pt16_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_SYCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt16_1'>通过</button>
+    <div id='div_pt16_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt16_1'>通过</button>
+    <div id='div_pt16_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt16_1: [2021-02-21 14:14:14,888] - INFO: --------test is begin--------
+[2021-02-21 14:14:14,889] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:14,890] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:14,890] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:15,025] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a07f9d9f83d9610dd8a14c9b2ab6a4777', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:15,026] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:15,026] - INFO: 请求body:{"api_name":"SG","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:15,027] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a07f9d9f83d9610dd8a14c9b2ab6a4777'}
+[2021-02-21 14:14:15,478] - INFO: 请求结果:{'data': {'html': 'https://api.sgcpapibob2.com/mobile/member/index?_OLID_=7c64dcfc4a38282e9f3d49eff10201f28140f813', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:15,479] - INFO: --------test is pass--------
+[2021-02-21 14:14:15,480] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TBBY.Launch_TBBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='pt17_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TBBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt17_1'>通过</button>
+    <div id='div_pt17_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt17_1'>通过</button>
+    <div id='div_pt17_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt17_1: [2021-02-21 14:14:20,488] - INFO: --------test is begin--------
+[2021-02-21 14:14:20,492] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:20,494] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:20,496] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:20,637] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ac9239726ad77f183046eef993a9f912d', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:20,638] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:20,639] - INFO: 请求body:{"api_name":"YBEG","game_code":"200","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:20,639] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ac9239726ad77f183046eef993a9f912d'}
+[2021-02-21 14:14:20,777] - INFO: 请求结果:{'data': {'html': 'https://game.iepex.com?token=HXwOThGRDdEOEQ1Q0I5N0IyxpGeMTUwMTlDQkE5RTM1MTk2NjA3ODU4MkIxRTYzOERDODVCNUE1RkU0N0Y3RDU5REVGMURBMjQ2NEUxRERBRDAxRDRENTlFNTgzRTZCMDdCRUZENjk4REJFNTg5MUFBOUE3M0JDRERGNzk5NjIzQUQyNUQwNjhBNDhDM0UxQzZDQUY4REYwRkE5NjU1MjEwNUUwQ0Q1NjIxQkM4RDNBODRDN0YwQkFFOEI5RUZDRjk0MzY2Pjduq&amp;deviceType=0&amp;pcode=dGI=&amp;t=MjAw&amp;ma=bWFpbmxhbmQ=&amp;lang=CN', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:20,777] - INFO: --------test is pass--------
+[2021-02-21 14:14:20,778] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TBCP.Launch_TBCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='pt18_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TBCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt18_1'>通过</button>
+    <div id='div_pt18_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt18_1'>通过</button>
+    <div id='div_pt18_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt18_1: [2021-02-21 14:14:25,786] - INFO: --------test is begin--------
+[2021-02-21 14:14:25,788] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:25,788] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:25,789] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:25,913] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a37b061e184949492dbd4e2035087819b', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:25,914] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:25,914] - INFO: 请求body:{"api_name":"BOBCP","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:25,914] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a37b061e184949492dbd4e2035087819b'}
+[2021-02-21 14:14:26,076] - INFO: 请求结果:{'data': {'html': 'https://h5.3u45d.com?token=710f476f02854ea09cd7ecc805d4d36f1613888066996', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:26,076] - INFO: --------test is pass--------
+[2021-02-21 14:14:26,077] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TBQP.Launch_TBQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='pt19_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TBQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt19_1'>通过</button>
+    <div id='div_pt19_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt19_1'>通过</button>
+    <div id='div_pt19_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt19_1: [2021-02-21 14:14:31,081] - INFO: --------test is begin--------
+[2021-02-21 14:14:31,082] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:31,083] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:31,083] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:31,212] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a8841eb093fe835a3d1cbcc212e6758d8', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:31,215] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:31,216] - INFO: 请求body:{"api_name":"TBQP","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:31,217] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a8841eb093fe835a3d1cbcc212e6758d8'}
+[2021-02-21 14:14:31,360] - INFO: 请求结果:{'data': {'html': 'https://game.ibcen.com?token=SlZNjU1NzdGMEQxRTREMUVDbyWbQTdDMjIwNDkyRDJENkRGNjBCNTQ5NEI2MjdCNUZGOTA2NUM3RTA2MTIwRDkyMEY5N0MzRkYyMTUxQ0MxNTZCQTU5MTExRjZERjQ4NjJBM0QwRUQzRTg0QTQzNjYyQzMzRUZGQjcxNkZBOTYyRTc5MEZFRDZCRDJBQjg3M0VGQjdDODFDMTUyM0Q3NjEzQ0Q2MDlDNzk2MTgwOENDNjY2MERENDVDQkRDNjIxQjE1MEVCaNTgO&amp;deviceType=0&amp;pcode=dGI=&amp;ma=bWFpbmxhbmQ=&amp;jumpType=1', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:31,361] - INFO: --------test is pass--------
+[2021-02-21 14:14:31,362] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TBTY.Launch_TBTY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='pt20_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TBTY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt20_1'>通过</button>
+    <div id='div_pt20_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt20_1'>通过</button>
+    <div id='div_pt20_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt20_1: [2021-02-21 14:14:36,376] - INFO: --------test is begin--------
+[2021-02-21 14:14:36,377] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:36,378] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:36,378] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:36,511] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a7c3cf3a97abb36105b448d5f17165ec8', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:36,511] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:36,512] - INFO: 请求body:{"api_name":"SPORT","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:36,512] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a7c3cf3a97abb36105b448d5f17165ec8'}
+[2021-02-21 14:14:36,645] - INFO: 请求结果:{'data': {'html': 'https://xj-mbs-bb2.2r9qgy.com/m/zh-cn/sports', 'jump_h5': '0', 'refer': 'http://trasreft.jz532.com', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:36,646] - INFO: --------test is pass--------
+[2021-02-21 14:14:36,646] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TBZR.Launch_TBZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='pt21_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TBZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt21_1'>通过</button>
+    <div id='div_pt21_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt21_1'>通过</button>
+    <div id='div_pt21_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt21_1: [2021-02-21 14:14:41,654] - INFO: --------test is begin--------
+[2021-02-21 14:14:41,655] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:41,656] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:41,656] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:41,791] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a51f46ea7d55d2ac9fc72ef62809fcf72', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:41,792] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:41,793] - INFO: 请求body:{"api_name":"YBZR","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:41,793] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a51f46ea7d55d2ac9fc72ef62809fcf72'}
+[2021-02-21 14:14:41,967] - INFO: 请求结果:{'data': {'html': 'https://www.o2ohua.com/?params=pQAD+Edg9fjAQ5LHoCmYmECKw/8M/zmJORIVM0JSTPUm/PKIVsJEqeF4UF4P/aLia9St0Q7Qf9SFYGkT6KneB4X8esDNwCvj9h7v5MOQiqs/E80f/iewTqs3axFhfc5IImUU70r1+RGrrKCGApDVlmpvA7wIDT2n5zEGpfkUUKfIHATtoJeCZ0zyLdnqUZWmG+wSrW+xi/vFX+fjEMNCnIiuubwkc/syYlJ7h6qz+mK7wWrcTVBTcDaZMrdgkWsXtKxMI/RuadWHB2W2kUy3xWRzP8HU6I/DaGHW8CWruDR+T2xtixqjCGNEzq+uPzwiyhrhsHgxCFN6OYQwtonjL8cBkcM2IlJ87h97C0EA/vfrJDcdLBCpPpX2afbLpN1wP0Ib3Qoa9EKeMSuPs1jGAd//ZUtFV/3PbJDsb/SsSMsM1dSGGSpLmo0qsH1jigmFarkoHp9586I1HZz1+doDjNnBwe1jzq9rhH2ibT2uEF0j0KQ/+uuuai7xeuQFNN8tdjmFAFsTBa4SKlwNh5zgUhAHzup5x9giktBjCZkxakflzSl9SfLUQqv0lcusFTK2FlkaLJHF581jR8pFp8iTKcKqAgmmI+6fUp9YU8UseOAoGcsVSVVD4tzmvi9Dt899rBcRjNvBm82i8XwtV5mSjD5Kg47O7sqT5PFAI3E1Di2OlP2ntBZe8bxDBie6aB8tjBALO8EuYWZdL4uy8nSmXkE5Yj0FG0JiP8AePsrAlYyYAevhzxgVsI/01KqDYS6XNwtUzDOeFSNLT3PoUrFSv/V4fb7buQ6qgZpWeo6JRr8WCuvGd+ojOwxcVW+1x9e9PK0Ld/8gMSnlHcR2SxP4/VsIw+FDDpnlqFwDwTaFgZ4=&amp;signature=779844F8FFA0571BBFB99C558F72583E&amp;ttl=1613888082886', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:41,967] - INFO: --------test is pass--------
+[2021-02-21 14:14:41,967] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TCGCP.Launch_TCGCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='pt22_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TCGCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt22_1'>通过</button>
+    <div id='div_pt22_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt22_1'>通过</button>
+    <div id='div_pt22_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt22_1: [2021-02-21 14:14:46,976] - INFO: --------test is begin--------
+[2021-02-21 14:14:46,977] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:46,977] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:46,978] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:47,113] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45af2155590e4c3280ecdb84ed26c625b21', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:47,116] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:47,117] - INFO: 请求body:{"api_name":"TCG","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:47,118] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45af2155590e4c3280ecdb84ed26c625b21'}
+[2021-02-21 14:14:47,454] - INFO: 请求结果:{'data': {'html': 'https://tcg.grhjioo.com/m/lotto-h5/h4/game_list?token=5439fa30-150c-4a16-ad50-d003ebc2bb0d&amp;merchant=imtianbo&amp;lang=CN&amp;css=CSS&amp;prize_mode=Elott', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:47,456] - INFO: --------test is pass--------
+[2021-02-21 14:14:47,456] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_TMQP.Launch_TMQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='pt23_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_TMQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt23_1'>通过</button>
+    <div id='div_pt23_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt23_1'>通过</button>
+    <div id='div_pt23_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt23_1: [2021-02-21 14:14:52,471] - INFO: --------test is begin--------
+[2021-02-21 14:14:52,473] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:52,474] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:52,474] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:52,640] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a0a3dca30c7439534a59795d219151ffb', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:52,641] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:52,641] - INFO: 请求body:{"api_name":"TMQP","game_code":"","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:52,642] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a0a3dca30c7439534a59795d219151ffb'}
+[2021-02-21 14:14:52,814] - INFO: 请求结果:{'data': {'html': 'https://api.tmg777.com/api/O/EfficacyEnterTheGame?data=%2BzhXrxoVfiegPmgT%2BzVQdjgd1clHEY%2ByCvycZ%2F2nhmAU0ZJb6rbub2AOQIbV7fOLBHhFe41Mo9mh8OjYRurNiqFu4y98kLFPDxCtvByfZtxpwb7zzMZSNGoiegiCnrTteO8FgDiTV21VZJZ1L7%2Bp51MKJuN48df5qEHSrkyOa1dp76MytP%2FR2gaed8rNTcR3SnlNRVqpfM3MAbG37J%2BZRC1UaKcgbty%2BjTiKJUILDaE%3D&amp;merch=TMC200516&amp;sign=E972FC265D3E33612494834F248687C7', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:52,814] - INFO: --------test is pass--------
+[2021-02-21 14:14:52,814] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_VRCP.Launch_VRCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='pt24_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_VRCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt24_1'>通过</button>
+    <div id='div_pt24_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt24_1'>通过</button>
+    <div id='div_pt24_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt24_1: [2021-02-21 14:14:57,825] - INFO: --------test is begin--------
+[2021-02-21 14:14:57,827] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:14:57,828] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:14:57,829] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:14:58,102] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a1caea181ecd3bb4e23c4b30fc7f8f505', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:14:58,105] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:14:58,106] - INFO: 请求body:{"api_name":"VR","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:14:58,107] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a1caea181ecd3bb4e23c4b30fc7f8f505'}
+[2021-02-21 14:14:58,231] - INFO: 请求结果:{'data': {'html': 'https://bob2.vrbetapi.com/Account/LoginValidate?version=1.0&amp;id=TIANBO&amp;data=7rAAMzeiBHqKsobrA4j1OUVklGgVShlVFrfdePsuN80Vx1DOAv09trR2gKESeWT1gbfq4OYsess9gaEN4DhEbw%3D%3D', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:14:58,232] - INFO: --------test is pass--------
+[2021-02-21 14:14:58,233] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_WMZR.Launch_WMZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='pt25_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_WMZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt25_1'>通过</button>
+    <div id='div_pt25_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt25_1: [2021-02-21 14:15:03,238] - INFO: --------test is begin--------
+[2021-02-21 14:15:03,239] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:03,240] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:03,240] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:03,375] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a21e14112da7d885e8babc53d64a132f6', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:03,376] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:15:03,376] - INFO: 请求body:{"api_name":"WMZR","game_code":null,"is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:15:03,377] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a21e14112da7d885e8babc53d64a132f6'}
+[2021-02-21 14:15:03,603] - INFO: 请求结果:{'data': {'html': 'https://wmtc.s5t4c.cn?sid=422014F20004A168M711384&amp;ui=0&amp;lang=cn&amp;co=wm', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:15:03,604] - INFO: --------test is pass--------
+[2021-02-21 14:15:03,605] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_launch_XCSBY.Launch_XCSBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c26',1)" class="detail" id='c26'>详细</a></td>
+</tr>
+
+<tr id='pt26_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_launch_XCSBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt26_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt26_1'>通过</button>
+    <div id='div_pt26_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt26_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt26_1'>通过</button>
+    <div id='div_pt26_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt26_1: [2021-02-21 14:15:08,618] - INFO: --------test is begin--------
+[2021-02-21 14:15:08,619] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:08,619] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:08,620] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:08,742] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a46e8cb34bae67ffb00cfcc4af7fceadf', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:08,743] - INFO: 请求url:http://pre-h5.theyyone.com/api/v5/venue/launch
+[2021-02-21 14:15:08,744] - INFO: 请求body:{"api_name":"PP","game_code":"pp4fortune","is_app":"","https":false,"isForce":"1"}
+[2021-02-21 14:15:08,744] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a46e8cb34bae67ffb00cfcc4af7fceadf'}
+[2021-02-21 14:15:09,258] - INFO: 请求结果:{'data': {'html': 'https://geo.igpentertainment.com/fishingking2/fishingking2-001.html?path=001&amp;tc=avg3Fspyji1P0DdoiXHKTgFcyiM25bxBRHwIX4rYo3XhjfDKgjwvo4NkUx3zDg3T', 'jump_h5': '0', 'refer': '', 'token': ''}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:15:09,259] - INFO: --------test is pass--------
+[2021-02-21 14:15:09,259] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_message_amount.Message_amount</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c27',1)" class="detail" id='c27'>详细</a></td>
+</tr>
+
+<tr id='pt27_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_message_amount</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt27_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt27_1'>通过</button>
+    <div id='div_pt27_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt27_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt27_1'>通过</button>
+    <div id='div_pt27_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt27_1: [2021-02-21 14:15:14,269] - INFO: --------test is begin--------
+[2021-02-21 14:15:14,271] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:14,272] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:14,273] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:14,400] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a029e81a357b3fcd1a5e6fb3dce097fa5', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:14,402] - INFO: 请求url:http://pre-h5.theyyone.com/api/v2/message_amount
+[2021-02-21 14:15:14,403] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a029e81a357b3fcd1a5e6fb3dce097fa5'}
+[2021-02-21 14:15:14,572] - INFO: 请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '查询成功', 'data': {'count': 898, 'activity': 893, 'dividend': 0, 'notice': 5, 'feedback': 0}}
+[2021-02-21 14:15:14,573] - INFO: --------test is pass--------
+[2021-02-21 14:15:14,574] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_transfer.Transfer</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c28',1)" class="detail" id='c28'>详细</a></td>
+</tr>
+
+<tr id='pt28_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_transfer</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt28_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt28_1'>通过</button>
+    <div id='div_pt28_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt28_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt28_1'>通过</button>
+    <div id='div_pt28_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt28_1: [2021-02-21 14:15:19,577] - INFO: --------test is begin--------
+[2021-02-21 14:15:19,578] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:19,579] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:19,579] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:19,716] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ae61f8c23be5ab6079b15dd69f8c8381b', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:19,718] - INFO: 获取余额请求url:http://pre-h5.theyyone.com/api/v5/venue/allBalance
+[2021-02-21 14:15:19,719] - INFO: 获取余额请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ae61f8c23be5ab6079b15dd69f8c8381b'}
+[2021-02-21 14:15:20,338] - INFO: 获取余额请求结果:{'data': [{'api_id': '53', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '32', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '51', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '46', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '37', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '38', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '22', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '47', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '44', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '30', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '41', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '40', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '35', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '7', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '43', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '52', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '50', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '45', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '34', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '6', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '49', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '3', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '42', 'balance': '0.00', 'isCache': '0', 'on_line': '0'}, {'api_id': '28', 'balance': '490.64', 'isCache': '0', 'on_line': '0'}], 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:15:20,340] - INFO: 一键回收请求url:http://pre-h5.theyyone.com//api/v5/venue/recycle
+[2021-02-21 14:15:20,341] - INFO: 一键回收请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ae61f8c23be5ab6079b15dd69f8c8381b'}
+[2021-02-21 14:15:21,735] - INFO: 一键回收请求结果:{'data': {}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:15:21,736] - INFO: 转账到天博体育请求url:http://pre-h5.theyyone.com//api/v5/venue/transfer
+[2021-02-21 14:15:21,736] - INFO: 转账到天博体育请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45ae61f8c23be5ab6079b15dd69f8c8381b'}
+[2021-02-21 14:15:21,737] - INFO: 转账到天博体育请求参数:{"type":"1","transfer_out":"1","transfer_in":"32","money":"100"}
+[2021-02-21 14:15:21,903] - INFO: 转账到天博体育请求结果:{'data': {'id_1': '390.64', 'id_32': '100.00'}, 'message': '转账成功', 'status_code': 6000}
+[2021-02-21 14:15:27,525] - INFO: 回收用户余额到中心钱包:{'data': {}, 'message': 'success', 'status_code': 6000}
+[2021-02-21 14:15:27,526] - INFO: --------test is pass--------
+[2021-02-21 14:15:27,527] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_userinfo.Userinfo</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c29',1)" class="detail" id='c29'>详细</a></td>
+</tr>
+
+<tr id='pt29_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_userinfo</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt29_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt29_1'>通过</button>
+    <div id='div_pt29_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt29_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt29_1'>通过</button>
+    <div id='div_pt29_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt29_1: [2021-02-21 14:15:32,538] - INFO: --------test is begin--------
+[2021-02-21 14:15:32,539] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:32,540] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:32,541] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:32,667] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a19ba09771e385d3d88a2351923ae6f0e', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:32,668] - INFO: 请求url:http://pre-h5.theyyone.com/api/v2/userinfo
+[2021-02-21 14:15:32,669] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a19ba09771e385d3d88a2351923ae6f0e'}
+[2021-02-21 14:15:32,804] - INFO: 请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '查询成功', 'data': {'address': '', 'birth': '2000-01-01', 'chess_photo': 'https://static.bpa7g4.com/chess/head/top_tx01.png', 'completed_recharge': '0.00', 'completed_record': '1898.93', 'created_at': '2020-08-09 10:57:21', 'days': '196', 'email': '', 'gender': '1', 'grade': '1', 'has_bank': True, 'has_qk_pwd': False, 'id': 588433, 'invite_off': False, 'is_daili': False, 'large_pay_off': True, 'money': '490.64', 'name': 'banana308', 'not_read_message_count': 898, 'phone': '167****6465', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a19ba09771e385d3d88a2351923ae6f0e', 'userprofile': 'https://static.bpa7g4.com/imgs/userprofile/ZlatanIBRAHIMOVIC.jpg', 'verify_type': '1'}}
+[2021-02-21 14:15:32,805] - INFO: --------test is pass--------
+[2021-02-21 14:15:32,805] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_userprofile.Userprofile</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c30',1)" class="detail" id='c30'>详细</a></td>
+</tr>
+
+<tr id='pt30_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_userprofile</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt30_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt30_1'>通过</button>
+    <div id='div_pt30_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt30_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt30_1'>通过</button>
+    <div id='div_pt30_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt30_1: [2021-02-21 14:15:37,809] - INFO: --------test is begin--------
+[2021-02-21 14:15:37,811] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:37,811] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:37,812] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:37,939] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a5fe334522f1ea8e829db5a3f0c376762', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:37,940] - INFO: 获取用户头像请求url:http://pre-h5.theyyone.com/api/v2/getdefaultuserprofile
+[2021-02-21 14:15:37,941] - INFO: 获取用户头像请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a5fe334522f1ea8e829db5a3f0c376762'}
+[2021-02-21 14:15:38,060] - INFO: 获取用户头像请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '获取成功', 'data': [{'imgname': 'CristianoRonaldo.jpg', 'imgurl': 'https://static.bpa7g4.com/imgs/userprofile/CristianoRonaldo.jpg', 'type': 'default'}, {'imgname': 'LionelMessi.jpg', 'imgurl': 'https://static.bpa7g4.com/imgs/userprofile/LionelMessi.jpg', 'type': 'default'}, {'imgname': 'ZlatanIBRAHIMOVIC.jpg', 'imgurl': 'https://static.bpa7g4.com/imgs/userprofile/ZlatanIBRAHIMOVIC.jpg', 'type': 'default'}, {'imgname': 'GoldHairGirl.jpg', 'imgurl': 'https://static.bpa7g4.com/imgs/userprofile/GoldHairGirl.jpg', 'type': 'default'}, {'imgname': 'BlackHairGirl.jpg', 'imgurl': 'https://static.bpa7g4.com/imgs/userprofile/BlackHairGirl.jpg', 'type': 'default'}]}
+[2021-02-21 14:15:38,060] - INFO: 设置用户头像请求url:http://pre-h5.theyyone.com/api/v2/setuserprofile
+[2021-02-21 14:15:38,061] - INFO: 设置用户头像请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '23', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a5fe334522f1ea8e829db5a3f0c376762'}
+[2021-02-21 14:15:38,061] - INFO: 设置用户头像请求body:{"imgname": "ZlatanIBRAHIMOVIC.jpg"}
+[2021-02-21 14:15:38,188] - INFO: 设置用户头像请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '设置成功', 'data': ''}
+[2021-02-21 14:15:38,190] - INFO: --------test is pass--------
+[2021-02-21 14:15:38,191] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_uservipinfo.Uservipinfo</td>
+    <td class="text-center">1</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c31',1)" class="detail" id='c31'>详细</a></td>
+</tr>
+
+<tr id='pt31_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_uservipinfo</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt31_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt31_1'>通过</button>
+    <div id='div_pt31_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt31_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt31_1'>通过</button>
+    <div id='div_pt31_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+pt31_1: [2021-02-21 14:15:43,198] - INFO: --------test is begin--------
+[2021-02-21 14:15:43,200] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-21 14:15:43,201] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-21 14:15:43,201] - INFO: 登录body:{'name': 'banana308', 'password': 'e10adc3949ba59abbe56e057f20f883e', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-21 14:15:43,338] - INFO: 登录结果:{'data': {'id': '588433', 'is_daili': 'false', 'name': 'banana308', 'real_name': '张三', 'token': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a487cb29d1e954e311a1a5b135ff80b9f', 'videoRefer': 'https://video.lyss8m.com', 'videoUrl': 'https://api.yyssugar.com'}, 'message': '登录成功', 'status_code': 6000}
+[2021-02-21 14:15:43,339] - INFO: 请求url:http://pre-h5.theyyone.com/api/v2/user_vip_info
+[2021-02-21 14:15:43,339] - INFO: 请求header:{'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '0', 'Content-Type': 'application/x-www-form-urlencoded', 'Host': 'pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/app/mine', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'X-API-TOKEN': '2c3efb12fec03b75752738ad67203a177fe278a52c96cc97ccb0c066fd5ae45a487cb29d1e954e311a1a5b135ff80b9f'}
+[2021-02-21 14:15:43,472] - INFO: 请求结果:{'flags': '1', 'status': 'success', 'status_code': 6000, 'message': '查询成功', 'data': {'offline_discount': 0.0, 'union_pay_discount': '0.0000', 'completed_info_at': '2021-02-21 00:00:00', 'member_info': {'completed_recharge': '0.00', 'completed_record': '1898.93'}, 'vip_info': {'id': '1', 'level': '1', 'level_name': 'VIP0', 'recharge_num': '0', 'upgrade_deposit': '0', 'upgrade_record': '0', 'relegation_flowing': '0', 'upgrade_gift': '0', 'birth_gift': '0', 'every_month_gift': '0', 'every_week_gift': '0', 'created_at': '2019-12-23 17:41:30', 'updated_at': '2020-10-13 13:37:39', 'withdraw_count': '5', 'withdraw_max': '200000.00'}, 'vip_info_next': {'id': '2', 'level': '2', 'level_name': 'VIP1', 'recharge_num': '0', 'upgrade_deposit': '0', 'upgrade_record': '4000', 'relegation_flowing': '2000', 'upgrade_gift': '8', 'birth_gift': '0', 'every_month_gift': '8', 'every_week_gift': '0', 'created_at': '2020-02-01 21:10:20', 'updated_at': '2020-02-01 21:10:20', 'withdraw_count': '5', 'withdraw_max': '200000.00'}, 'fs_info': [{'created_at': '2019-12-25 17:26:40', 'game_type': '1', 'game_type_name': '真人', 'id': '1', 'level': '1', 'ls_limit': '1', 'name': 'VIP0', 'quota': '10888.00', 'rate': '0.4', 'updated_at': '2019-12-25 17:26:40'}, {'created_at': '2019-12-25 17:36:47', 'game_type': '3', 'game_type_name': '电子', 'id': '12', 'level': '1', 'ls_limit': '1', 'name': 'VIP0', 'quota': '10888.00', 'rate': '0.8', 'updated_at': '2019-12-25 17:36:47'}, {'created_at': '2019-12-25 17:51:28', 'game_type': '5', 'game_type_name': '体育', 'id': '23', 'level': '1', 'ls_limit': '1', 'name': 'VIP0', 'quota': '10888.00', 'rate': '0.38', 'updated_at': '2019-12-25 17:51:28'}, {'created_at': '2019-12-25 18:00:23', 'game_type': '6', 'game_type_name': '棋牌', 'id': '34', 'level': '1', 'ls_limit': '1', 'name': 'VIP0', 'quota': '10888.00', 'rate': '0.55', 'updated_at': '2019-12-25 18:00:23'}, {'created_at': '2019-12-25 18:12:31', 'game_type': '8', 'game_type_name': '电竞', 'id': '45', 'level': '1', 'ls_limit': '1', 'name': 'VIP0', 'quota': '10888.00', 'rate': '0.48', 'updated_at': '2020-12-12 18:02:23'}, {'created_at': '2019-12-25 18:37:09', 'game_type': '89', 'game_type_name': '篮球', 'id': '56', 'level': '1', 'ls_limit': '1', 'name': 'VIP0', 'quota': '10888.00', 'rate': '0.48', 'updated_at': '2020-04-26 19:31:40'}], 'vip_gift_info': {'birthday_money': '', 'created_at': '2018-05-31 13:47:13', 'discount_describe': '无', 'grade_discount': '无', 'grade_gift': '', 'id': '11', 'mouth_money': '0', 'status': '1', 'up_grade_money': '0', 'updated_at': '2018-06-01 16:26:39', 'vip_level': 'VIP0'}, 'to_next_level_percent': 47.47, 'notice': {'deposit': '0.00', 'is_max': False, 'record': '2101.07'}, 'apply_gift_status': 0}}
+[2021-02-21 14:15:43,472] - INFO: --------test is pass--------
+[2021-02-21 14:15:43,473] - INFO: ----------end----------
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>31</td>
+    <td>31</td>
+    <td>0</td>
+    <td>0</td>
+    <td>通过率：100.00%</td>
+</tr>
+</table>
+
+<div id='ending'> </div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+
+</body>
+</html>

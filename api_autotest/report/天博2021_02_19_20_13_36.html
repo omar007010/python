@@ -1,0 +1,1450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.3"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 80%; }
+table       { font-size: 100%; }
+
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/*level 调整增加只显示通过用例的分类 --Adil
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:Error   // pt hiddenRow, ft none
+4:All     //pt none, ft none
+下面设置 按钮展开逻辑  --Yang Yao Jun
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2 || level ==3 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+    //console.log(detail_class.length)
+    if (level == 3) {
+        for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="收起"
+        }
+    }
+    else{
+            for (var i = 0; i < detail_class.length; i++){
+            detail_class[i].innerHTML="详细"
+        }
+    }
+}
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&');
+    s = s.replace(/</g,'<');
+    s = s.replace(/>/g,'>');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> kemp</p>
+<p class='attribute'><strong>开始时间 : </strong> 2021-02-19 20:13:36</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:04.859559</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 31，错误 31，通过率= 0.00%</p>
+
+<p class='description'>用例执行情况</p>
+</div>
+
+
+
+    <p id='show_detail_line'>
+    <a class="btn btn-primary" href='javascript:showCase(0)'>通过率 [0.00% ]</a>
+    <a class="btn btn-success" href='javascript:showCase(2)'>通过[ 0 ]</a>
+    <a class="btn btn-warning" href='javascript:showCase(3)'>错误[ 31 ]</a>
+    <a class="btn btn-danger" href='javascript:showCase(1)'>失败[ 0 ]</a>
+    <a class="btn btn-info" href='javascript:showCase(4)'>所有[ 31 ]</a>
+    </p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 14px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>错误</td>
+    <td>失败</td>
+    <td>详细</td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_bannerNotice.BannerNotice</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',1)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='ft1_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_bannerNotice</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft1_1'>错误</button>
+    <div id='div_ft1_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft1_1'>错误</button>
+    <div id='div_ft1_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft1_1: [2021-02-19 20:13:36,595] - INFO: --------test is begin--------
+[2021-02-19 20:13:36,603] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:36,603] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:36,604] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,031] - INFO: 登录结果:{'data': {}, 'message': '用户名或密码错误,第1次尝试,5次输入错误用户将锁定', 'status_code': 6003}
+[2021-02-19 20:13:37,033] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,034] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_bannerNotice.py", line 16, in test_bannerNotice
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_channelListV5.ChannelListV5</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',1)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='ft2_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_channelListV5</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft2_1'>错误</button>
+    <div id='div_ft2_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft2_1'>错误</button>
+    <div id='div_ft2_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft2_1: [2021-02-19 20:13:37,099] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,102] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,104] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,105] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,239] - INFO: 登录结果:{'data': {}, 'message': '用户名或密码错误,第2次尝试,5次输入错误用户将锁定', 'status_code': 6003}
+[2021-02-19 20:13:37,239] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,240] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_channelListV5.py", line 16, in test_channelListV5
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_feedback.Feedback</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',1)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='ft3_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_feedback</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft3_1'>错误</button>
+    <div id='div_ft3_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft3_1: [2021-02-19 20:13:37,250] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,251] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,251] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,251] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,384] - INFO: 登录结果:{'data': {}, 'message': '用户名或密码错误,第3次尝试,5次输入错误用户将锁定', 'status_code': 6003}
+[2021-02-19 20:13:37,384] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,384] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_feedback.py", line 16, in test_feedback
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_gametypeapilist.Gametypeapilist</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='ft4_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_gametypeapilist</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft4_1: [2021-02-19 20:13:37,393] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,394] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,394] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,395] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,515] - INFO: 登录结果:{'data': {}, 'message': '用户名或密码错误,第4次尝试,5次输入错误用户将锁定', 'status_code': 6003}
+[2021-02-19 20:13:37,516] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,516] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_gametypeapilist.py", line 16, in test_gametypeapilist
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_AGBY.Launch_AGBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',1)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='ft5_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_AGBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_1'>错误</button>
+    <div id='div_ft5_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_1'>错误</button>
+    <div id='div_ft5_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft5_1: [2021-02-19 20:13:37,525] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,525] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,526] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,526] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,657] - INFO: 登录结果:{'data': {}, 'message': '用户名或密码错误,第5次尝试,5次输入错误用户将锁定', 'status_code': 6003}
+[2021-02-19 20:13:37,657] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,658] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_AGBY.py", line 16, in test_launch_AGBY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_AGZR.Launch_AGZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c6',1)" class="detail" id='c6'>详细</a></td>
+</tr>
+
+<tr id='ft6_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_AGZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft6_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft6_1'>错误</button>
+    <div id='div_ft6_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft6_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft6_1'>错误</button>
+    <div id='div_ft6_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft6_1: [2021-02-19 20:13:37,667] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,667] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,668] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,668] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,801] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:37,802] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,804] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_AGZR.py", line 16, in test_launch_AGZR
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_BGZR.Launch_BGZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c7',1)" class="detail" id='c7'>详细</a></td>
+</tr>
+
+<tr id='ft7_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_BGZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft7_1'>错误</button>
+    <div id='div_ft7_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft7_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft7_1'>错误</button>
+    <div id='div_ft7_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft7_1: [2021-02-19 20:13:37,830] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,832] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,833] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,834] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:37,970] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:37,971] - INFO: 登录异常:'token'
+[2021-02-19 20:13:37,972] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_BGZR.py", line 16, in test_launch_BGZR
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_EBETZR.Launch_EBETZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c8',1)" class="detail" id='c8'>详细</a></td>
+</tr>
+
+<tr id='ft8_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_EBETZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft8_1'>错误</button>
+    <div id='div_ft8_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft8_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft8_1'>错误</button>
+    <div id='div_ft8_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft8_1: [2021-02-19 20:13:37,991] - INFO: --------test is begin--------
+[2021-02-19 20:13:37,994] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:37,995] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:37,996] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,117] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,118] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,118] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_EBETZR.py", line 16, in test_launch_EBETZR
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_FYDJ.Launch_FYDJ</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c9',1)" class="detail" id='c9'>详细</a></td>
+</tr>
+
+<tr id='ft9_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_FYDJ</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft9_1'>错误</button>
+    <div id='div_ft9_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft9_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft9_1'>错误</button>
+    <div id='div_ft9_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft9_1: [2021-02-19 20:13:38,131] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,132] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,133] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,134] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,254] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,254] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,255] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_FYDJ.py", line 16, in test_launch_FYDJ
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_GDQP.Launch_GDQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c10',1)" class="detail" id='c10'>详细</a></td>
+</tr>
+
+<tr id='ft10_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_GDQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft10_1'>错误</button>
+    <div id='div_ft10_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft10_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft10_1'>错误</button>
+    <div id='div_ft10_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft10_1: [2021-02-19 20:13:38,264] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,265] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,265] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,266] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,398] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,399] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,399] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_GDQP.py", line 16, in test_launch_GDQP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_IMDJ.Launch_IMDJ</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c11',1)" class="detail" id='c11'>详细</a></td>
+</tr>
+
+<tr id='ft11_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_IMDJ</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft11_1'>错误</button>
+    <div id='div_ft11_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft11_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft11_1'>错误</button>
+    <div id='div_ft11_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft11_1: [2021-02-19 20:13:38,407] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,408] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,408] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,409] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,528] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,528] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,529] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_IMDJ.py", line 16, in test_launch_IMDJ
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_IMQP.Launch_IMQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c12',1)" class="detail" id='c12'>详细</a></td>
+</tr>
+
+<tr id='ft12_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_IMQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft12_1'>错误</button>
+    <div id='div_ft12_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft12_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft12_1'>错误</button>
+    <div id='div_ft12_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft12_1: [2021-02-19 20:13:38,537] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,538] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,538] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,539] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,669] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,669] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,669] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_IMQP.py", line 16, in test_launch_IMQP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_IMTY.Launch_IMTY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c13',1)" class="detail" id='c13'>详细</a></td>
+</tr>
+
+<tr id='ft13_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_IMTY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft13_1'>错误</button>
+    <div id='div_ft13_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft13_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft13_1'>错误</button>
+    <div id='div_ft13_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft13_1: [2021-02-19 20:13:38,678] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,679] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,679] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,680] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,810] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,810] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,811] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_IMTY.py", line 16, in test_launch_IMTY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_PTBY.Launch_PTBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c14',1)" class="detail" id='c14'>详细</a></td>
+</tr>
+
+<tr id='ft14_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_PTBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft14_1'>错误</button>
+    <div id='div_ft14_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft14_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft14_1'>错误</button>
+    <div id='div_ft14_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft14_1: [2021-02-19 20:13:38,819] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,820] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,821] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,821] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:38,952] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:38,952] - INFO: 登录异常:'token'
+[2021-02-19 20:13:38,953] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_PTBY.py", line 16, in test_launch_PTBY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_SBTY.Launch_SBTY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c15',1)" class="detail" id='c15'>详细</a></td>
+</tr>
+
+<tr id='ft15_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_SBTY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft15_1'>错误</button>
+    <div id='div_ft15_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft15_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft15_1'>错误</button>
+    <div id='div_ft15_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft15_1: [2021-02-19 20:13:38,961] - INFO: --------test is begin--------
+[2021-02-19 20:13:38,962] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:38,962] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:38,962] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,080] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,081] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,081] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_SBTY.py", line 16, in test_launch_SBTY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_SYCP.Launch_SYCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c16',1)" class="detail" id='c16'>详细</a></td>
+</tr>
+
+<tr id='ft16_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_SYCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft16_1'>错误</button>
+    <div id='div_ft16_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft16_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft16_1'>错误</button>
+    <div id='div_ft16_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft16_1: [2021-02-19 20:13:39,092] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,093] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,093] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,093] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,214] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,215] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,215] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_SYCP.py", line 16, in test_launch_SYCP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TBBY.Launch_TBBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c17',1)" class="detail" id='c17'>详细</a></td>
+</tr>
+
+<tr id='ft17_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TBBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft17_1'>错误</button>
+    <div id='div_ft17_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft17_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft17_1'>错误</button>
+    <div id='div_ft17_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft17_1: [2021-02-19 20:13:39,226] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,227] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,228] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,228] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,347] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,347] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,348] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TBBY.py", line 16, in test_launch_TBBY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TBCP.Launch_TBCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c18',1)" class="detail" id='c18'>详细</a></td>
+</tr>
+
+<tr id='ft18_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TBCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft18_1'>错误</button>
+    <div id='div_ft18_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft18_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft18_1'>错误</button>
+    <div id='div_ft18_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft18_1: [2021-02-19 20:13:39,356] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,357] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,357] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,358] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,478] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,479] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,480] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TBCP.py", line 16, in test_launch_TBCP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TBQP.Launch_TBQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c19',1)" class="detail" id='c19'>详细</a></td>
+</tr>
+
+<tr id='ft19_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TBQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft19_1'>错误</button>
+    <div id='div_ft19_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft19_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft19_1'>错误</button>
+    <div id='div_ft19_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft19_1: [2021-02-19 20:13:39,501] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,503] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,504] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,505] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,626] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,627] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,627] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TBQP.py", line 16, in test_launch_TBQP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TBTY.Launch_TBTY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c20',1)" class="detail" id='c20'>详细</a></td>
+</tr>
+
+<tr id='ft20_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TBTY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft20_1'>错误</button>
+    <div id='div_ft20_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft20_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft20_1'>错误</button>
+    <div id='div_ft20_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft20_1: [2021-02-19 20:13:39,639] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,640] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,641] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,642] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,770] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,771] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,771] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TBTY.py", line 16, in test_launch_TBTY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TBZR.Launch_TBZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c21',1)" class="detail" id='c21'>详细</a></td>
+</tr>
+
+<tr id='ft21_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TBZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft21_1'>错误</button>
+    <div id='div_ft21_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft21_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft21_1'>错误</button>
+    <div id='div_ft21_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft21_1: [2021-02-19 20:13:39,780] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,780] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,781] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,781] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:39,911] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:39,912] - INFO: 登录异常:'token'
+[2021-02-19 20:13:39,912] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TBZR.py", line 16, in test_launch_TBZR
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TCGCP.Launch_TCGCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c22',1)" class="detail" id='c22'>详细</a></td>
+</tr>
+
+<tr id='ft22_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TCGCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft22_1'>错误</button>
+    <div id='div_ft22_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft22_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft22_1'>错误</button>
+    <div id='div_ft22_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft22_1: [2021-02-19 20:13:39,921] - INFO: --------test is begin--------
+[2021-02-19 20:13:39,922] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:39,922] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:39,923] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,051] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,051] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,051] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TCGCP.py", line 16, in test_launch_TCGCP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_TMQP.Launch_TMQP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c23',1)" class="detail" id='c23'>详细</a></td>
+</tr>
+
+<tr id='ft23_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_TMQP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft23_1'>错误</button>
+    <div id='div_ft23_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft23_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft23_1'>错误</button>
+    <div id='div_ft23_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft23_1: [2021-02-19 20:13:40,060] - INFO: --------test is begin--------
+[2021-02-19 20:13:40,061] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:40,061] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:40,062] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,181] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,182] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,183] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_TMQP.py", line 16, in test_launch_TMQP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_VRCP.Launch_VRCP</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c24',1)" class="detail" id='c24'>详细</a></td>
+</tr>
+
+<tr id='ft24_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_VRCP</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft24_1'>错误</button>
+    <div id='div_ft24_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft24_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft24_1'>错误</button>
+    <div id='div_ft24_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft24_1: [2021-02-19 20:13:40,201] - INFO: --------test is begin--------
+[2021-02-19 20:13:40,204] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:40,206] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:40,208] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,355] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,356] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,357] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_VRCP.py", line 16, in test_launch_VRCP
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_WMZR.Launch_WMZR</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c25',1)" class="detail" id='c25'>详细</a></td>
+</tr>
+
+<tr id='ft25_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_WMZR</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft25_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft25_1'>错误</button>
+    <div id='div_ft25_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft25_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft25_1'>错误</button>
+    <div id='div_ft25_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft25_1: [2021-02-19 20:13:40,385] - INFO: --------test is begin--------
+[2021-02-19 20:13:40,387] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:40,389] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:40,390] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,523] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,524] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,524] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_WMZR.py", line 16, in test_launch_WMZR
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_launch_XCSBY.Launch_XCSBY</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c26',1)" class="detail" id='c26'>详细</a></td>
+</tr>
+
+<tr id='ft26_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_launch_XCSBY</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft26_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft26_1'>错误</button>
+    <div id='div_ft26_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft26_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft26_1'>错误</button>
+    <div id='div_ft26_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft26_1: [2021-02-19 20:13:40,537] - INFO: --------test is begin--------
+[2021-02-19 20:13:40,538] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:40,539] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:40,539] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,668] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,669] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,670] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_launch_XCSBY.py", line 16, in test_launch_XCSBY
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_message_amount.Message_amount</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c27',1)" class="detail" id='c27'>详细</a></td>
+</tr>
+
+<tr id='ft27_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_message_amount</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft27_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft27_1'>错误</button>
+    <div id='div_ft27_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft27_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft27_1'>错误</button>
+    <div id='div_ft27_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft27_1: [2021-02-19 20:13:40,682] - INFO: --------test is begin--------
+[2021-02-19 20:13:40,683] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:40,684] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:40,685] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,809] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,810] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,812] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_message_amount.py", line 16, in test_message_amount
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_transfer.Transfer</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c28',1)" class="detail" id='c28'>详细</a></td>
+</tr>
+
+<tr id='ft28_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_transfer</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft28_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft28_1'>错误</button>
+    <div id='div_ft28_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft28_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft28_1'>错误</button>
+    <div id='div_ft28_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft28_1: [2021-02-19 20:13:40,844] - INFO: --------test is begin--------
+[2021-02-19 20:13:40,848] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:40,850] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:40,852] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:40,977] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:40,979] - INFO: 登录异常:'token'
+[2021-02-19 20:13:40,980] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_transfer.py", line 16, in test_transfer
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_userinfo.Userinfo</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c29',1)" class="detail" id='c29'>详细</a></td>
+</tr>
+
+<tr id='ft29_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_userinfo</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft29_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft29_1'>错误</button>
+    <div id='div_ft29_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft29_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft29_1'>错误</button>
+    <div id='div_ft29_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft29_1: [2021-02-19 20:13:41,009] - INFO: --------test is begin--------
+[2021-02-19 20:13:41,011] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:41,012] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:41,013] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:41,144] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:41,145] - INFO: 登录异常:'token'
+[2021-02-19 20:13:41,146] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_userinfo.py", line 16, in test_userinfo
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_userprofile.Userprofile</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c30',1)" class="detail" id='c30'>详细</a></td>
+</tr>
+
+<tr id='ft30_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_userprofile</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft30_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft30_1'>错误</button>
+    <div id='div_ft30_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft30_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft30_1'>错误</button>
+    <div id='div_ft30_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft30_1: [2021-02-19 20:13:41,163] - INFO: --------test is begin--------
+[2021-02-19 20:13:41,165] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:41,166] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:41,167] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:41,290] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:41,291] - INFO: 登录异常:'token'
+[2021-02-19 20:13:41,292] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_userprofile.py", line 16, in test_userprofile
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>test_uservipinfo.Uservipinfo</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c31',1)" class="detail" id='c31'>详细</a></td>
+</tr>
+
+<tr id='ft31_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_uservipinfo</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft31_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft31_1'>错误</button>
+    <div id='div_ft31_1' class="collapse">  -->
+
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft31_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft31_1'>错误</button>
+    <div id='div_ft31_1' class="collapse in" style='text-align: left; color:red;cursor:pointer'>
+    <pre>
+    
+ft31_1: [2021-02-19 20:13:41,310] - INFO: --------test is begin--------
+[2021-02-19 20:13:41,312] - INFO: 登录url:http://pre-h5.theyyone.com/api/v5/user/login
+[2021-02-19 20:13:41,313] - INFO: 登录header:{'Accept-Encoding': 'gzip, deflate', 'Accept-Language': 'zh-CN,zh;q=0.9', 'Client-Type': 'h5', 'Connection': 'keep-alive', 'Content-Length': '100', 'Content-Type': 'application/json', 'Host': 'pre-h5.theyyone.com', 'Origin': 'http://pre-h5.theyyone.com', 'Referer': 'http://pre-h5.theyyone.com/entry/login', 'User_Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1'}
+[2021-02-19 20:13:41,314] - INFO: 登录body:{'name': 'judy92', 'password': '9982b2a7fceaaee2c8444b5086aee008', 'domain': 'pre-h5.theyyone.com'}
+[2021-02-19 20:13:41,433] - INFO: 登录结果:{'data': {'phoneStatus': 1}, 'message': '为了您的账号安全，我们已经锁定该账号。', 'status_code': 6017}
+[2021-02-19 20:13:41,434] - INFO: 登录异常:'token'
+[2021-02-19 20:13:41,435] - ERROR: 错误的参数:'token'
+Traceback (most recent call last):
+  File "D:\接口自动化\api_autotest\case\test_uservipinfo.py", line 16, in test_uservipinfo
+    token = commons.get_token(r)
+  File "D:\接口自动化\api_autotest\common\commons.py", line 22, in get_token
+    return re['data']['token']
+KeyError: 'token'
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>31</td>
+    <td>0</td>
+    <td>31</td>
+    <td>0</td>
+    <td>通过率：0.00%</td>
+</tr>
+</table>
+
+<div id='ending'> </div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+
+</body>
+</html>
